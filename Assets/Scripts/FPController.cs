@@ -11,63 +11,36 @@ namespace Artemis
         public float Acceleration = 15f;
 
         [SerializeField] float WalkSpeed = 3.5f;
-        [SerializeField] float SprintSpeed = 8f;
+        [SerializeField] public float SprintSpeed = 8f;
 
         [Space(15)]
         [Tooltip("This is how high the character can jump!")]
-        [SerializeField] float JumpHeight = 2f; 
+        [SerializeField] float JumpHeight = 2f;
         public bool Sprinting
         {
             get
             {
-                return SprintInput && CurrentSpeed > 0.1f; 
-            }
-        }
-
-        [Header("Look Parameters")]
-        public Vector2 LookSensitivity = new Vector3(0.1f, 0.1f);
-
-        public float Pitchlimit = 85f;
-        [SerializeField] float currentPitch = 0f; 
-
-        public float CurrentPitch
-        {
-            get => currentPitch;
-
-            set
-            {
-                currentPitch = Mathf.Clamp(value, -Pitchlimit, Pitchlimit);
-            }
-        }
-
-        [Header("Camera Parameters")]
-        [SerializeField] float CameraNormalFOV = 60f;
-        [SerializeField] float CameraSprintFOV = 80f;
-        [SerializeField] float CameraFOVSmoothing = 1f;
-        float TargetCameraFOV
-        {
-            get
-            {
-                return Sprinting ? CameraSprintFOV : CameraNormalFOV;
+                return SprintInput && CurrentSpeed > 0.1f;
             }
         }
 
         [Header("Physics Parameters")]
         [SerializeField] float GravityScale = 3f;
 
-        public float VerticalVelocity = 0f; 
+        public float VerticalVelocity = 0f;
         public Vector3 CurrentVelocity { get; private set; }
         public float CurrentSpeed { get; private set; }
-        public bool IsGrounded => characterController.isGrounded; 
+        public bool IsGrounded => characterController.isGrounded;
 
         [Header("Inputs")]
         public Vector2 MoveInput;
-        public Vector2 LookInput;
-        public bool SprintInput; 
+        public bool SprintInput;
 
         [Header("Components")]
-        [SerializeField] CinemachineCamera fpCamera;
         [SerializeField] CharacterController characterController;
+
+        [Header("Disable")]
+        public bool CanMove = false; //Player shouldn't be able to walk now
 
         #region Unity Methods 
         void OnValidate()
@@ -81,8 +54,6 @@ namespace Artemis
         void Update()
         {
             MoveUpdate();
-            LookUpdate();
-            CameraUpdate(); 
         }
         #endregion
 
@@ -97,6 +68,10 @@ namespace Artemis
         }
         void MoveUpdate()
         {
+            if(CanMove == false)
+            {
+                return;
+            }
             // W and S keys are the first half 
             // A and D keys are the second half 
             Vector3 motion = transform.forward * MoveInput.y + transform.right * MoveInput.x;
@@ -128,31 +103,6 @@ namespace Artemis
 
             // Updating Speed 
             CurrentSpeed = CurrentVelocity.magnitude;
-        }
-        void LookUpdate()
-        {
-            Vector2 input = new Vector2(LookInput.x * LookSensitivity.x, LookInput.y * LookSensitivity.y);
-
-            // Looking up and down
-            CurrentPitch -= input.y;
-
-            fpCamera.transform.localRotation = Quaternion.Euler(CurrentPitch, 0f, 0f);
-
-            // Lokking left and right 
-            transform.Rotate(Vector3.up * input.x); 
-        }
-
-        void CameraUpdate()
-        {
-            float targetFOV = CameraNormalFOV;
-            if (Sprinting)
-            {
-                float speedRatio = CurrentSpeed / SprintSpeed; 
-
-                targetFOV = Mathf.Lerp(CameraNormalFOV, CameraSprintFOV, speedRatio);
-            }
-            // Smoothly lerp the FOV of the camera from the current to the targeted FOV and return back. 
-            fpCamera.Lens.FieldOfView = Mathf.Lerp(fpCamera.Lens.FieldOfView, targetFOV, CameraFOVSmoothing * Time.deltaTime);
         }
         #endregion
     }
