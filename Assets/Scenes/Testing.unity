@@ -2820,16 +2820,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ced7406ac10684284ec28e6523ca92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_securityRoom: {fileID: 240187310}
-  camera_1A: {fileID: 1167478568}
-  camera_1B: {fileID: 1873317604}
-  camera_1C: {fileID: 1356096699}
-  camera_2A: {fileID: 47957767}
-  camera_2B: {fileID: 234611923}
-  camera_2C: {fileID: 1172639610}
-  camera_3: {fileID: 405805895}
-  camera_4A: {fileID: 932009178}
-  camera_4B: {fileID: 1798462799}
+  cameras:
+  - {fileID: 240187310}
+  - {fileID: 1167478568}
+  - {fileID: 1873317604}
+  - {fileID: 1356096699}
+  - {fileID: 47957767}
+  - {fileID: 234611923}
+  - {fileID: 1172639610}
+  - {fileID: 405805895}
+  - {fileID: 932009178}
+  - {fileID: 1798462799}
   camUI: {fileID: 2118318964}
 --- !u!4 &405912781
 Transform:
@@ -4107,6 +4108,7 @@ Transform:
   - {fileID: 830684366}
   - {fileID: 843296356}
   - {fileID: 240009095}
+  - {fileID: 1101971124}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &502134499
@@ -12039,8 +12041,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101971123}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -1.11022296e-17, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.1188354, y: -0.03, z: -0.17596436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12050,7 +12052,7 @@ Transform:
   - {fileID: 933875359}
   - {fileID: 1334632632}
   - {fileID: 2032965410}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 502134498}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105890165
 GameObject:
@@ -13591,7 +13593,7 @@ GameObject:
   - component: {fileID: 1256325077}
   - component: {fileID: 1256325076}
   m_Layer: 0
-  m_Name: Test_AI (1)
+  m_Name: Test_AI_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13613,7 +13615,6 @@ MonoBehaviour:
   - {fileID: 921660703}
   - {fileID: 1334632632}
   - {fileID: 2032965410}
-  securityRoom: {fileID: 1970873535}
 --- !u!195 &1256325077
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13907,8 +13908,9 @@ GameObject:
   - component: {fileID: 1262882072}
   - component: {fileID: 1262882071}
   - component: {fileID: 1262882070}
+  - component: {fileID: 1262882076}
   m_Layer: 0
-  m_Name: Test_AI
+  m_Name: Test_AI_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13930,7 +13932,6 @@ MonoBehaviour:
   - {fileID: 516861737}
   - {fileID: 933875359}
   - {fileID: 2032965410}
-  securityRoom: {fileID: 1970873535}
 --- !u!195 &1262882071
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14045,6 +14046,22 @@ Transform:
   - {fileID: 1123931500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1262882076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262882069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc3aee2af55b4f41b2d880f4fbb56f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 405912781}
+  sabotageDelay: 5
+  camManager: {fileID: 405912780}
 --- !u!1 &1281017584
 GameObject:
   m_ObjectHideFlags: 0
@@ -15067,7 +15084,7 @@ GameObject:
   - component: {fileID: 1330350181}
   - component: {fileID: 1330350180}
   m_Layer: 0
-  m_Name: Test_AI (2)
+  m_Name: Test_AI_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15089,7 +15106,6 @@ MonoBehaviour:
   - {fileID: 2032965410}
   - {fileID: 921660703}
   - {fileID: 54965759}
-  securityRoom: {fileID: 1970873535}
 --- !u!195 &1330350181
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20181,4 +20197,3 @@ SceneRoots:
   - {fileID: 1262882075}
   - {fileID: 1256325081}
   - {fileID: 1330350185}
-  - {fileID: 1101971124}
