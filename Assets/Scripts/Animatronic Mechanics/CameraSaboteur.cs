@@ -1,40 +1,45 @@
 using System.Collections;
 using UnityEngine;
 
-public class CameraSaboteur : AnimatronicAI
+public class CameraSaboteur : MonoBehaviour
 {
-    public float sabotageDelay = 5f;
-    private bool hasSabotaged = false;
+    public float sabotageCheckInterval = 10f; // How often to check in seconds, or how often to roll the dice 
+    [Range(0f, 1f)]
+    public float sabotageChance = 0.1f; // 0.1f = 10% chance, this goes to 1f to become 50% 
+
     public CameraManager camManager;
+    private bool isSabotaging = false; 
 
-    protected override void ActOnArrival()
+    private void Start()
+    { 
+        StartCoroutine(SabotageRoutine()); 
+    }
+    private IEnumerator SabotageRoutine()
     {
-        base.ActOnArrival();
+        while (true)
+        {
+            yield return new WaitForSeconds(sabotageCheckInterval);
 
-        if(!hasSabotaged && camManager != null)
-        {
-            StartCoroutine(SabotageCameras());
-            hasSabotaged = true;
-        }
-        // If it's the fianl waypoint, start sabotage 
-        if(currentWaypointIndex >= waypoints.Length && !hasSabotaged)
-        {
-            
+            if(!isSabotaging && Random.value <= sabotageChance)
+            {
+                StartCoroutine(SabotageCameras()); 
+            }
         }
     }
     private IEnumerator SabotageCameras()
     {
-        yield return new WaitForSeconds(sabotageDelay);
+        isSabotaging = true; 
+
+        yield return new WaitForSeconds(1f);
 
         Camera[] cams = camManager.cameras; 
 
-        int randomIndex = Random.Range(1, cams.Length); // Skip index 0 
+        int index = Random.Range(1, cams.Length); // Skip index 0 
 
-        camManager.DisableCamera(randomIndex);
-
-        //  Example: Send event to camera manager 
-        //camManager.DisableRandomCamera();
+        camManager.DisableCamera(index);
 
         Debug.Log("Cameras sabotaged!");
+
+        isSabotaging = false; 
     }
 }
