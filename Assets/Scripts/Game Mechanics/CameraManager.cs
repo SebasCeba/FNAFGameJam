@@ -3,40 +3,24 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    //public Camera camera_securityRoom; // main camera 
-    //public Camera camera_1A;
-    //public Camera camera_1B;
-    //public Camera camera_1C;
-    //public Camera camera_2A;
-    //public Camera camera_2B;
-    //public Camera camera_2C;
-    //public Camera camera_3;
-    //public Camera camera_4A;
-    //public Camera camera_4B;
-
+    [Header("Camera Array")]
     public Camera[] cameras;
     protected int currentCamera;
 
+    [Header("Camera Tracking")]
     //[SerializeField] private bool CamerasOpen;
-    [SerializeField] private GameObject camUI;
     private HashSet<int> disabledCameraIndices = new HashSet<int>(); // Tracks disabled camera 
+    [Header("Camera Interactions")]
+    [SerializeField] private float rebootCooldown = 10f;
+    [SerializeField] private AudioClip switchSound;
+    [SerializeField] private AudioClip denySound;
+    [SerializeField] private AudioSource audioSource; 
 
+    private float lastRebootTime = -Mathf.Infinity;
+
+    [Header("References")]
+    [SerializeField] private GameObject camUI;
     public bool CamerasOpen { get; private set; } = false;
-    //public void Awake()
-    //{
-    //    cameras = new Camera[10];
-
-    //    cameras[0] = camera_securityRoom;
-    //    cameras[1] = camera_1A;
-    //    cameras[2] = camera_1B;
-    //    cameras[3] = camera_1C;
-    //    cameras[4] = camera_2A;
-    //    cameras[5] = camera_2B;
-    //    cameras[6] = camera_2C;
-    //    cameras[7] = camera_3;
-    //    cameras[8] = camera_4A;
-    //    cameras[9] = camera_4B;
-    //}
     private void Awake()
     {
         if(cameras == null || cameras.Length == 0)
@@ -86,6 +70,12 @@ public class CameraManager : MonoBehaviour
     }
     public void OpenCam()
     {
+        if(AllCamerasOffline())
+        {
+            Debug.LogWarning("All cameras are sabotaged! Reboot required");
+            PlayDenySound();
+            return; 
+        }
         CamerasOpen = !CamerasOpen; 
         ShowCamera();
     }
@@ -97,14 +87,6 @@ public class CameraManager : MonoBehaviour
             // Return to the main camera 
             SwitchCams(0);
         }
-        //if(CamerasOpen)
-        //{
-        //    camUI.SetActive(true); 
-        //}
-        //else
-        //{
-        //    camUI.SetActive(false);
-        //}
     }
     public void SwitchCams(int index)
     {
@@ -114,6 +96,7 @@ public class CameraManager : MonoBehaviour
         if(disabledCameraIndices.Contains(index))
         {
             Debug.LogWarning($"Camera {index} is sabotaged. Cannot view.");
+            audioSource?.PlayOneShot(denySound); // Play the deny sound 
             return; 
         }
 
@@ -130,6 +113,41 @@ public class CameraManager : MonoBehaviour
         if (cameras[index].TryGetComponent<AudioListener>(out var activeListnerer))
             activeListnerer.enabled = true;
 
+        audioSource?.PlayOneShot(switchSound); 
         currentCamera = index;
+    }
+    public void TryRebootCamera()
+    {
+        if(Time.time - lastRebootTime < rebootCooldown)
+        {
+            Debug.Log("reboot on cooldown");
+            return; 
+        }
+        foreach(int index in disabledCameraIndices)
+        {
+            cameras[index].enabled = true;
+            if (cameras[index].TryGetComponent<AudioListener>(out var listener))
+                listener.enabled = false; 
+        }
+        disabledCameraIndices.Clear();
+        lastRebootTime = Time.time;
+        Debug.Log("Cameras rebooted."); 
+    }
+    private bool AllCamerasOffline()
+    {
+        // skip index 0 if it's the secuirty room camera 
+        for(int i = 1; i < cameras.Length; i++)
+        {
+            if (!disabledCameraIndices.Contains(1))
+            {
+                return false; // At least one camera is working 
+            }
+             
+        }
+        return true; // All non-security room cameras are disabled
+    }
+    private void PlayDenySound()
+    {
+        audioSource.PlayOneShot(denySound);
     }
 }

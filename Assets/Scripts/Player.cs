@@ -33,13 +33,6 @@ namespace Artemis
                 controller.TryJump(); 
             }
         }
-        //void OnInteract(InputValue value)
-        //{
-        //    if(value.isPressed)
-        //    {
-        //        camManager.SwitchCams();
-        //    }
-        //}
         void OnOpenCams(InputValue value)
         {
             if(value.isPressed)
@@ -53,11 +46,10 @@ namespace Artemis
 
                 Cursor.lockState = camsAreOpen ? CursorLockMode.None : CursorLockMode.Confined; 
             }
-            //else
-            //{
-            //    camManager.OpenCam();
-            //    lookController.canLook = true;
-            //}
+        }
+        void OnRebootCams(InputValue value)
+        {
+            camManager.TryRebootCamera(); 
         }
         #endregion
 
