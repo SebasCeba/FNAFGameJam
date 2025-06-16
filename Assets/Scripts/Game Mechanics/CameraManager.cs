@@ -21,6 +21,7 @@ public class CameraManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject camUI;
     public bool CamerasOpen { get; private set; } = false;
+    private bool canSwitchCameras = true; // Can we switch cameras?
     private void Awake()
     {
         if(cameras == null || cameras.Length == 0)
@@ -40,40 +41,13 @@ public class CameraManager : MonoBehaviour
             Debug.Log($"Camera {index} is disabled.");
         }
     }
-    public void IncreaseCamera()
-    {
-        cameras[currentCamera].GetComponent<AudioListener>().enabled = false;
-        cameras[currentCamera].enabled = false; 
-
-        currentCamera++;
-
-        if(currentCamera >= cameras.Length)
-        {
-            currentCamera = 0;
-        }
-        cameras[currentCamera].enabled = true;
-        cameras[currentCamera].GetComponent<AudioListener>().enabled = true;
-    }
-    public void DecreaseCamera()
-    {
-        cameras[currentCamera].GetComponent<AudioListener>().enabled = false;
-        cameras[currentCamera].enabled = false; 
-
-        currentCamera--;
-
-        if (currentCamera < 0)
-        {
-            currentCamera = cameras.Length - 1;
-        }
-        cameras[currentCamera].enabled = true;
-        cameras[currentCamera].GetComponent<AudioListener>().enabled = true;
-    }
     public void OpenCam()
     {
-        if(AllCamerasOffline())
+        if(!CamerasOpen && AllCamerasOffline())
         {
             Debug.LogWarning("All cameras are sabotaged! Reboot required");
             PlayDenySound();
+            canSwitchCameras = false; // Prevent switching cameras if all are offline 
             return; 
         }
         CamerasOpen = !CamerasOpen; 
@@ -90,6 +64,8 @@ public class CameraManager : MonoBehaviour
     }
     public void SwitchCams(int index)
     {
+        if (!canSwitchCameras) return; // Prevent switching if not allowed
+
         if (index < 0 || index >= cameras.Length) return; 
 
         // Blocks if sabotaged 
@@ -131,6 +107,7 @@ public class CameraManager : MonoBehaviour
         }
         disabledCameraIndices.Clear();
         lastRebootTime = Time.time;
+        canSwitchCameras = true; // Allow switching cameras again after reboot
         Debug.Log("Cameras rebooted."); 
     }
     private bool AllCamerasOffline()

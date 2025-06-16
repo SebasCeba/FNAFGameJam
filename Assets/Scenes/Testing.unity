@@ -3108,6 +3108,7 @@ GameObject:
   - component: {fileID: 406726905}
   - component: {fileID: 406726904}
   - component: {fileID: 406726903}
+  - component: {fileID: 406726907}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3198,6 +3199,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &406726907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406726902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5dd0355601f004a9cacf1321a89aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rebootButton: {fileID: 889979272}
+  rebootCooldown: 5
+  camManager: {fileID: 405912780}
+  rebootMeter: {fileID: 889979275}
+  meterCycleDuration: 5
 --- !u!114 &450546258 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2601197734343652045, guid: fffb200ea5733474980af6aac17385e7, type: 3}
@@ -14003,6 +14021,9 @@ MonoBehaviour:
   - {fileID: 921660703}
   - {fileID: 1334632632}
   - {fileID: 2032965410}
+  waitTimeAtPoint: 2
+  lookAtCameraTime: 2
+  cameras: []
 --- !u!195 &1256325077
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14320,6 +14341,9 @@ MonoBehaviour:
   - {fileID: 516861737}
   - {fileID: 933875359}
   - {fileID: 2032965410}
+  waitTimeAtPoint: 2
+  lookAtCameraTime: 2
+  cameras: []
 --- !u!195 &1262882071
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15493,6 +15517,9 @@ MonoBehaviour:
   - {fileID: 2032965410}
   - {fileID: 921660703}
   - {fileID: 54965759}
+  waitTimeAtPoint: 2
+  lookAtCameraTime: 2
+  cameras: []
 --- !u!195 &1330350181
 NavMeshAgent:
   m_ObjectHideFlags: 0

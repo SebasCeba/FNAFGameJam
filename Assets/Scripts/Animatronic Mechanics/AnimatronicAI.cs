@@ -1,13 +1,18 @@
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.Editor;
 
 public class AnimatronicAI : MonoBehaviour
 {
     public Transform[] waypoints;
-    //public Transform securityRoom;
+    public float waitTimeAtPoint = 2f;
+    public float lookAtCameraTime = 2;
+    public Camera[] cameras; // Assign from Camera Manager or Inspector 
+
     protected NavMeshAgent agent;
-    protected int currentWaypointIndex = 0;
+    protected int currentWaypointIndex = -1;
+    protected bool isWaiting = false; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
@@ -24,16 +29,63 @@ public class AnimatronicAI : MonoBehaviour
             ActOnArrival();
         }
     }
-    protected virtual void ActOnArrival()
+    protected virtual IEnumerator ActOnArrival()
     {
-        if (currentWaypointIndex < waypoints.Length)
+        isWaiting = true; // Set waiting state
+
+        // 1. Look at closest camera 
+        Camera closetCam = FindClosestCamera(); 
+        if(closetCam != null)
         {
-            GoToNextWayPoint();
+            Vector3 lookPos = closetCam.transform.position - transform.position;
+            lookPos.y = 0; // Keep upright 
+            Quaternion lookRot = Quaternion.LookRotation(lookPos);
+            float t = 0;
+            while (t < lookAtCameraTime)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 2f);
+                t += Time.deltaTime;
+                yield return null; // Wait for next frame 
+            }
         }
+
+        // 2. Wait at the waypoint 
+        yield return new WaitForSeconds(waitTimeAtPoint);
+
+        // 3. Move to the next random waypoint (avoiding grouping)
+        GoToNextWayPoint();
+
+        isWaiting = false; // Reset waiting state
     }
     protected void GoToNextWayPoint()
     {
-        agent.SetDestination(waypoints[currentWaypointIndex].position); 
-        currentWaypointIndex++;
+        int nextIndex = currentWaypointIndex;
+        int attempts = 0;
+        do
+        {
+            nextIndex = Random.Range(0, waypoints.Length);
+            attempts++;
+        }
+        // Avoid current point and points occupid by other animatronics 
+        while((nextIndex == currentWaypointIndex || IsWaypointOccupied(nextIndex)) && attempts < 10);
+
+        currentWaypointIndex = nextIndex; 
+        agent.SetDestination(waypoints[currentWaypointIndex].position);
+    }
+    protected bool IsWaypointOccupied(int waypointIndex)
+    {
+        // Find all animatronics in the scne 
+        var animatronics = FindObjectsByType<AnimatronicAI>(FindObjectsSortMode.InstanceID); 
+        return animatronics.Any(a => a != this && a.currentWaypointIndex == waypointIndex);
+    }
+    protected Camera FindClosestCamera()
+    {
+        if(cameras == null || cameras.Length == 0)
+        {
+            Debug.LogWarning("No cameras assigned to AnimatronicAI");
+            return null;
+        }
+        return cameras.OrderBy(cam => Vector3.Distance(transform.position, cam.transform.position))
+                      .FirstOrDefault();
     }
 }
