@@ -603,7 +603,7 @@ Transform:
   m_GameObject: {fileID: 54965758}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.49, y: 2.54, z: 7.55}
+  m_LocalPosition: {x: 41.49, y: 0.97, z: 7.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4778,7 +4778,7 @@ Transform:
   m_GameObject: {fileID: 516861736}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.89, y: 1.28, z: 7.55}
+  m_LocalPosition: {x: -44.89, y: 1.023, z: 7.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9866,7 +9866,7 @@ Transform:
   m_GameObject: {fileID: 921660702}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.91, y: 2.54, z: 7.55}
+  m_LocalPosition: {x: 1.91, y: 0.911, z: 7.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10034,7 +10034,7 @@ Transform:
   m_GameObject: {fileID: 933875358}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.6, y: 2.54, z: 13.26}
+  m_LocalPosition: {x: 63.6, y: 0.93, z: 13.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13998,6 +13998,7 @@ GameObject:
   - component: {fileID: 1256325078}
   - component: {fileID: 1256325077}
   - component: {fileID: 1256325076}
+  - component: {fileID: 1256325082}
   m_Layer: 0
   m_Name: Test_AI_2
   m_TagString: Untagged
@@ -14012,18 +14013,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256325075}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a66000268d57f3429f418e472606d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints:
   - {fileID: 921660703}
+  - {fileID: 516861737}
+  - {fileID: 54965759}
+  - {fileID: 933875359}
   - {fileID: 1334632632}
   - {fileID: 2032965410}
   waitTimeAtPoint: 2
   lookAtCameraTime: 2
-  cameras: []
+  cameras:
+  - {fileID: 1167478568}
+  - {fileID: 1873317604}
+  - {fileID: 1356096699}
+  - {fileID: 47957767}
+  - {fileID: 234611923}
+  - {fileID: 1172639610}
+  - {fileID: 405805895}
+  - {fileID: 932009178}
+  - {fileID: 1798462799}
 --- !u!195 &1256325077
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14031,7 +14044,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256325075}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -14138,6 +14151,40 @@ Transform:
   - {fileID: 565364287}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1256325082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256325075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9f16b74cc70d145a10a568214165f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 921660703}
+  - {fileID: 516861737}
+  - {fileID: 54965759}
+  - {fileID: 933875359}
+  - {fileID: 1334632632}
+  - {fileID: 2032965410}
+  waitTimeAtPoint: 2
+  lookAtCameraTime: 2
+  cameras:
+  - {fileID: 1167478568}
+  - {fileID: 1873317604}
+  - {fileID: 1356096699}
+  - {fileID: 47957767}
+  - {fileID: 234611923}
+  - {fileID: 1172639610}
+  - {fileID: 405805895}
+  - {fileID: 932009178}
+  - {fileID: 1798462799}
+  viewAngleThreshold: 30
+  slowedSpeed: 0.5
+  normalSpeed: 3
 --- !u!43 &1259614540
 Mesh:
   m_ObjectHideFlags: 0
@@ -14324,7 +14371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1262882070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14338,12 +14385,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints:
+  - {fileID: 921660703}
   - {fileID: 516861737}
+  - {fileID: 54965759}
   - {fileID: 933875359}
+  - {fileID: 1334632632}
   - {fileID: 2032965410}
   waitTimeAtPoint: 2
   lookAtCameraTime: 2
-  cameras: []
+  cameras:
+  - {fileID: 1167478568}
+  - {fileID: 1873317604}
+  - {fileID: 1356096699}
+  - {fileID: 47957767}
+  - {fileID: 234611923}
+  - {fileID: 1172639610}
+  - {fileID: 405805895}
+  - {fileID: 932009178}
+  - {fileID: 1798462799}
 --- !u!195 &1262882071
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14470,9 +14529,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc3aee2af55b4f41b2d880f4fbb56f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sabotageCheckInterval: 10
-  sabotageChance: 0.5
+  waypoints: []
+  waitTimeAtPoint: 2
+  lookAtCameraTime: 2
+  cameras: []
   camManager: {fileID: 405912780}
+  sabotageWaypointIndex: 0
 --- !u!1 &1281017584
 GameObject:
   m_ObjectHideFlags: 0
@@ -15500,7 +15562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1330350180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15508,18 +15570,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330350179}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a66000268d57f3429f418e472606d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints:
-  - {fileID: 2032965410}
   - {fileID: 921660703}
+  - {fileID: 516861737}
   - {fileID: 54965759}
+  - {fileID: 933875359}
+  - {fileID: 1334632632}
+  - {fileID: 2032965410}
   waitTimeAtPoint: 2
   lookAtCameraTime: 2
-  cameras: []
+  cameras:
+  - {fileID: 1167478568}
+  - {fileID: 1873317604}
+  - {fileID: 1356096699}
+  - {fileID: 47957767}
+  - {fileID: 234611923}
+  - {fileID: 1172639610}
+  - {fileID: 405805895}
+  - {fileID: 932009178}
+  - {fileID: 1798462799}
 --- !u!195 &1330350181
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15527,7 +15601,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330350179}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -15659,7 +15733,7 @@ Transform:
   m_GameObject: {fileID: 1334632631}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.6, y: 2.54, z: -26.3}
+  m_LocalPosition: {x: 63.6, y: 0.91, z: -26.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20040,7 +20114,7 @@ Transform:
   m_GameObject: {fileID: 2032965409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.01, y: 2.54, z: -26.3}
+  m_LocalPosition: {x: -24.01, y: 1.09, z: -26.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

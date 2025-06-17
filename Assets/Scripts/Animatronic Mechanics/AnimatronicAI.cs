@@ -24,9 +24,9 @@ public class AnimatronicAI : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if(!agent.pathPending && agent.remainingDistance < 0.5f)
+        if(!agent.pathPending && agent.remainingDistance < 0.5f && !isWaiting)
         {
-            ActOnArrival();
+            StartCoroutine(ActOnArrival());
         }
     }
     protected virtual IEnumerator ActOnArrival()
