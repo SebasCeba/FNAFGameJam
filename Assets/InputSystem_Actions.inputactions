@@ -471,9 +471,9 @@
                 },
                 {
                     "name": "",
-                    "id": "3527f0e6-c7d7-4ef9-850f-69a8ba0c88c9",
+                    "id": "00d4ec16-8351-4755-9ba0-b26998bec5d2",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Interact",
