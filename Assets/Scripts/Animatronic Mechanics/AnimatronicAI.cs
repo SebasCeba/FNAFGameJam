@@ -12,7 +12,11 @@ public class AnimatronicAI : MonoBehaviour
 
     protected NavMeshAgent agent;
     protected int currentWaypointIndex = -1;
-    protected bool isWaiting = false; 
+    protected bool isWaiting = false;
+
+    public Door officeDoor; // Assign in Inspector if needed
+    public int officeWaypointIndex = -1;
+    public float waitAtOfficeTime = 5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
@@ -33,27 +37,57 @@ public class AnimatronicAI : MonoBehaviour
     {
         isWaiting = true; // Set waiting state
 
-        // 1. Look at closest camera 
-        Camera closetCam = FindClosestCamera(); 
-        if(closetCam != null)
+        // Check if at the office {
+        if(currentWaypointIndex == officeWaypointIndex)
         {
-            Vector3 lookPos = closetCam.transform.position - transform.position;
-            lookPos.y = 0; // Keep upright 
-            Quaternion lookRot = Quaternion.LookRotation(lookPos);
-            float t = 0;
-            while (t < lookAtCameraTime)
+            Debug.Log($"{name} reached the office door.");
+
+            // Check door state 
+            if(officeDoor != null)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 2f);
-                t += Time.deltaTime;
-                yield return null; // Wait for next frame 
+                // Door is closed 
+                Debug.Log($"{name}: Door is CLOSED, waiting {waitAtOfficeTime}s...");
+
+                yield return new WaitForSeconds(waitAtOfficeTime); // Wait at the office door
+
+                if(officeDoor.IsOpen)
+                {
+                    Debug.Log($"{name}: Door is OPEN, entering office...");
+                    EnterOffice(); // Enter the office if the door is open
+                    yield break; // End coroutine after entering office
+                }
+            }
+            else
+            {
+                // Door is open 
+                Debug.Log($"{name}: Door was closed, going to next waypoint..."); // Game over, jump scare, etc
+
+                GoToNextWayPoint(); // Go to the next waypoint after waiting
             }
         }
+        else
+        {
+            // 1. Look at closest camera 
+            Camera closetCam = FindClosestCamera();
+            if (closetCam != null)
+            {
+                Vector3 lookPos = closetCam.transform.position - transform.position;
+                lookPos.y = 0; // Keep upright 
+                Quaternion lookRot = Quaternion.LookRotation(lookPos);
+                float t = 0;
+                while (t < lookAtCameraTime)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 2f);
+                    t += Time.deltaTime;
+                    yield return null; // Wait for next frame 
+                }
+            }
+            // 2. Wait at the waypoint 
+            yield return new WaitForSeconds(waitTimeAtPoint);
 
-        // 2. Wait at the waypoint 
-        yield return new WaitForSeconds(waitTimeAtPoint);
-
-        // 3. Move to the next random waypoint (avoiding grouping)
-        GoToNextWayPoint();
+            // 3. Move to the next random waypoint (avoiding grouping)
+            GoToNextWayPoint();
+        }
 
         isWaiting = false; // Reset waiting state
     }
@@ -87,5 +121,10 @@ public class AnimatronicAI : MonoBehaviour
         }
         return cameras.OrderBy(cam => Vector3.Distance(transform.position, cam.transform.position))
                       .FirstOrDefault();
+    }
+    protected virtual void EnterOffice()
+    {
+        Debug.Log("${name} entered the office! Ha You got tickled");
+        // Should play a jumpscare, freeze the inputs of the player or look at the door that has the inturder coming in. 
     }
 }
