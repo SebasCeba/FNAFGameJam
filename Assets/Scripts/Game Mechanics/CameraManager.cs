@@ -115,7 +115,7 @@ public class CameraManager : MonoBehaviour
         // skip index 0 if it's the secuirty room camera 
         for(int i = 1; i < cameras.Length; i++)
         {
-            if (!disabledCameraIndices.Contains(1))
+            if (!disabledCameraIndices.Contains(i))
             {
                 return false; // At least one camera is working 
             }

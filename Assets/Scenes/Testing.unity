@@ -20555,6 +20555,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 2601197734343652045, guid: fffb200ea5733474980af6aac17385e7, type: 3}
+      propertyPath: Lens.FarClipPlane
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3736529172795209769, guid: fffb200ea5733474980af6aac17385e7, type: 3}
       propertyPath: m_TagString
       value: MainCamera
@@ -20607,6 +20611,10 @@ PrefabInstance:
       propertyPath: camManager
       value: 
       objectReference: {fileID: 131329837}
+    - target: {fileID: 7662067310008158732, guid: fffb200ea5733474980af6aac17385e7, type: 3}
+      propertyPath: far clip plane
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8960364551431314013, guid: fffb200ea5733474980af6aac17385e7, type: 3}
       propertyPath: m_Name
       value: Player
