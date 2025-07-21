@@ -473,7 +473,7 @@
                     "name": "",
                     "id": "00d4ec16-8351-4755-9ba0-b26998bec5d2",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Interact",
