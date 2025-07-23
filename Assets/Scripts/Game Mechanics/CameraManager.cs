@@ -152,4 +152,18 @@ public class CameraManager : MonoBehaviour
     {
         audioSource.PlayOneShot(denySound);
     }
+    public void ForceExitAndLockCameras()
+    {
+        CamerasOpen = false; 
+        camUI.SetActive(false);
+        canSwitchCameras = false; // Lock cameras from switching
+
+        foreach(var cam in cameras)
+        {
+            cam.enabled = false;
+            if (cam.TryGetComponent<AudioListener>(out var listener))
+                listener.enabled = false;
+        }
+        Debug.Log("Cameras have been locked and exited.");
+    }
 }

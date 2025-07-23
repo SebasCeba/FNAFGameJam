@@ -4,12 +4,19 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public List<Task> ActiveTasks = new List<Task>();
-
+    public System.Action OnAnyTaskFailed; 
     private void Update()
     {
         foreach(var task in ActiveTasks)
         {
+            float oldTime = task.TimeRemaining;
             task.UpdateTask(Time.deltaTime);
+
+            if(!task.IsCompleted && oldTime > 0 && task.TimeRemaining <= 0)
+            {
+                OnAnyTaskFailed?.Invoke();
+                ActiveTasks.Remove(task);
+            }
         }
     }
     public void AddTask(Task task)
