@@ -22,11 +22,28 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private GameObject camUI;
     public bool CamerasOpen { get; private set; } = false;
     private bool canSwitchCameras = true; // Can we switch cameras?
+
+    [SerializeField] public PowerSystem power;
     private void Awake()
     {
         if(cameras == null || cameras.Length == 0)
         {
             Debug.LogWarning("No cameras assigned in cameraManager"); 
+        }
+    }
+    private void Update()
+    {
+        if(power.Power <= 0f)
+        {
+            // Force cameras to close 
+            if (CamerasOpen)
+            {
+                CamerasOpen = false;
+                power.SystemsOn -= 1; // Decrement power system count when cameras are closed
+                ShowCamera(); // Hide camera UI
+            }
+            camUI.SetActive(false); // Ensure camera UI is hidden when power is out
+            canSwitchCameras = false; // Prevent switching cameras when power is out
         }
     }
     public void DisableCamera(int index)
@@ -50,7 +67,15 @@ public class CameraManager : MonoBehaviour
             canSwitchCameras = false; // Prevent switching cameras if all are offline 
             return; 
         }
-        CamerasOpen = !CamerasOpen; 
+        CamerasOpen = !CamerasOpen;
+        if (CamerasOpen)
+        {
+            power.SystemsOn += 1; // Increment power system count when cameras are opened
+        }
+        else
+        {
+            power.SystemsOn -= 1; // Decrement power system count when cameras are closed
+        }
         ShowCamera();
     }
     public void ShowCamera()

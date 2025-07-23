@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
     public bool IsOn; 
     private Vector3 targetPos;
 
+    [SerializeField] private PowerSystem power; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,6 +27,22 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Force open door and light off 
+        if(power.Power <= 0f)
+        {
+            if(!IsOpen) // If the door is not open, close it
+            {
+                IsOpen = true; // Set the door to open
+            }
+            if (IsOn)
+            {
+                spotLight.SetActive(false); // Turn off the light
+                IsOn = false; // Set the light state to off
+                power.SystemsOn -= 1; // Decrement the power system count
+            }
+        }
+        
+
         float desiredY = IsOpen ? OpenY : ClosedY; // Determine the desired Y position based on the door state
         if (Mathf.Abs(transform.localPosition.y - desiredY) > 0.01f) // Check if the door needs to move
         {
@@ -42,10 +59,12 @@ public class Door : MonoBehaviour
         if (IsOn)
         {
             spotLight.SetActive(true); // Turn on the light
+            power.SystemsOn += 1; // Increment the power system count
         }
         else
         {
             spotLight.SetActive(false); // Turn off the light
+            power.SystemsOn -= 1; // Decrement the power system count
         }
     }
 }

@@ -37,6 +37,13 @@ namespace Artemis
         {
             if(value.isPressed)
             {
+                float currentPower = camManager.power.Power; 
+                if(currentPower <= 0f)
+                {
+                    lookController.canLook = true; // To prevent the player from softlocking whenever they have 0 power and try to open the cameras
+                    Cursor.lockState = CursorLockMode.Confined; // Ensure cursor is confined when cameras are not open
+                    return; // Do not open cameras if power is 0
+                }
                 camManager.OpenCam();
 
                 // Get current cam state

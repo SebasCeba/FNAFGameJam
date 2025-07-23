@@ -7,7 +7,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] private InputActionReference interactAction; // Assign in Inspector
 
     private Camera mainCam;
-
+    [SerializeField] private PowerSystem power;
     private void OnEnable()
     {
         interactAction.action.performed += OnInteract;
@@ -33,6 +33,14 @@ public class DoorController : MonoBehaviour
             if (hit.transform == transform)
             {
                 door.IsOpen = !door.IsOpen; // Toggle the door state
+                if (door.IsOpen)
+                {
+                    power.SystemsOn -= 1;
+                }
+                else
+                {
+                    power.SystemsOn += 1;
+                }
                 Debug.Log($"Door state toggled. IsOpen: {door.IsOpen}"); // Log the state change 
             }
         }
