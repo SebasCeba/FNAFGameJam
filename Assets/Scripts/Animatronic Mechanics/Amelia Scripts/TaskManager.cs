@@ -8,17 +8,30 @@ public class TaskManager : MonoBehaviour
     public System.Action OnAnyTaskFailed; 
     private void Update()
     {
-        foreach(var task in ActiveTasks)
+        for(int i = ActiveTasks.Count -1; i >= 0; i--)
         {
-            float oldTime = task.TimeRemaining;
+            var task = ActiveTasks[i];
+            float oldTime = task.TimeRemaining; 
             task.UpdateTask(Time.deltaTime);
 
             if(!task.IsCompleted && oldTime > 0 && task.TimeRemaining <= 0)
             {
                 OnAnyTaskFailed?.Invoke();
-                ActiveTasks.Remove(task);
+                ActiveTasks.RemoveAt(i);
+                taskUIManager?.RemoveTask(task); // Update UI when a task fails
             }
         }
+        //foreach(var task in ActiveTasks)
+        //{
+        //    float oldTime = task.TimeRemaining;
+        //    task.UpdateTask(Time.deltaTime);
+
+        //    if(!task.IsCompleted && oldTime > 0 && task.TimeRemaining <= 0)
+        //    {
+        //        OnAnyTaskFailed?.Invoke();
+        //        ActiveTasks.Remove(task);
+        //    }
+        //}
     }
     public void AddTask(Task task)
     {

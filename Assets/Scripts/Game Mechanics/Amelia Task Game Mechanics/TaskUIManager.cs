@@ -19,7 +19,7 @@ public class TaskUIManager : MonoBehaviour
         }
 
         GameObject entry = Instantiate(taskEntryPrefab, taskListParent);
-        entry.GetComponentInChildren<TMP_Text>().text = task.Description;
+        entry.GetComponentInChildren<TaskUIEntry>().Initialize(task);
 
         taskToUIEntry.Add(task, entry);
 
