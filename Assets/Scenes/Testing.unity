@@ -646,8 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c9ae5303529d54c9756f51e6d3afb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskType: 0
-  interactAction: {fileID: 0}
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!65 &23494559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -663,7 +662,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5450,8 +5449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c9ae5303529d54c9756f51e6d3afb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskType: 1
-  interactAction: {fileID: 0}
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!65 &712497839
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5467,7 +5465,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -14206,8 +14204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c9ae5303529d54c9756f51e6d3afb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskType: 0
-  interactAction: {fileID: 0}
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!65 &1322532604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14223,7 +14220,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
