@@ -26,7 +26,9 @@ public class InteractableItem : MonoBehaviour
         if (!playerNearby || !context.performed) return;
 
         var task = taskManager.ActiveTasks.Find(t =>
-        t.Type == taskType && t.Description.Contains(taskKeyword));
+        t.Data != null &&
+        t.taskType == taskType &&
+        t.Data.taskName.Contains(taskKeyword)); /*== taskType && t.Description.Contains(taskKeyword));*/
 
         if(task != null)
         {

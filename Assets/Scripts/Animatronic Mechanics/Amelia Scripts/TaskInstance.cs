@@ -4,6 +4,7 @@ using UnityEngine;
 public class TaskInstance
 {
     public TaskData Data { get; private set; }
+    public TaskType taskType;
     public List<GameObject> SpawnedObjects { get; private set; }
     public int CompletedCount { get; private set; }
     public int TotalObjects => SpawnedObjects.Count;

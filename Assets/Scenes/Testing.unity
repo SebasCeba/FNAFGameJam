@@ -633,7 +633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &23494558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4578,9 +4578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f97e79aa1c84345ba4ffcfd247cfa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskEntryPrefab: {fileID: 6111751825751473832, guid: a0c40bc3763fc92408bf48475558a105, type: 3}
   taskListParent: {fileID: 1842614523}
-  maxTasksOnScreen: 3
 --- !u!43 &626470982
 Mesh:
   m_ObjectHideFlags: 0
@@ -5436,7 +5434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &712497838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14191,7 +14189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1322532603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16829,6 +16827,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskManager: {fileID: 549858709}
+  taskUIManager: {fileID: 549858710}
+  taskUIPrefab: {fileID: 6111751825751473832, guid: a0c40bc3763fc92408bf48475558a105, type: 3}
   camManager: {fileID: 131329837}
 --- !u!43 &1633211408
 Mesh:
