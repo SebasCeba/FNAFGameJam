@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 
 public class TaskOB : MonoBehaviour
 {
-    public TaskType taskType;
-    private bool playerNerby = false;
-    private TaskManager taskManager;
     [SerializeField] private InputActionReference interactAction; // Reference to the interact action
     private void Awake()
     {

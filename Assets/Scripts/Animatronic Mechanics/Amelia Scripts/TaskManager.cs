@@ -21,23 +21,7 @@ public class TaskManager : MonoBehaviour
                 taskUIManager?.RemoveTask(task); // Update UI when a task fails
             }
         }
-        //foreach(var task in ActiveTasks)
-        //{
-        //    float oldTime = task.TimeRemaining;
-        //    task.UpdateTask(Time.deltaTime);
-
-        //    if(!task.IsCompleted && oldTime > 0 && task.TimeRemaining <= 0)
-        //    {
-        //        OnAnyTaskFailed?.Invoke();
-        //        ActiveTasks.Remove(task);
-        //    }
-        //}
     }
-    public void AddTask(Task task)
-    {
-        ActiveTasks.Add(task);
-        //Gonna add UI on here 
-        taskUIManager?.AddTask(task);
     }
     public void CompleteTask(Task task)
     {

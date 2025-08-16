@@ -18,7 +18,6 @@ public class QuestGiverAnimatronic : MonoBehaviour
             }
         );
         taskManager.AddTask(task);
-        // Update the UI to notify the player's duties. 
     }
     public void GiveSupplyTask()
     {
