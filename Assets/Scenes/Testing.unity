@@ -626,27 +626,14 @@ GameObject:
   - component: {fileID: 23494561}
   - component: {fileID: 23494560}
   - component: {fileID: 23494559}
-  - component: {fileID: 23494558}
+  - component: {fileID: 23494563}
   m_Layer: 0
   m_Name: Task Testing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &23494558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 23494557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61c9ae5303529d54c9756f51e6d3afb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_IsActive: 1
 --- !u!65 &23494559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -736,6 +723,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23494563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23494557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f121f6e612e12cc40a7589be2d581c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskType: 0
+  taskKeyword: 
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &27273275
 Mesh:
   m_ObjectHideFlags: 0
@@ -5427,27 +5429,14 @@ GameObject:
   - component: {fileID: 712497841}
   - component: {fileID: 712497840}
   - component: {fileID: 712497839}
-  - component: {fileID: 712497838}
+  - component: {fileID: 712497843}
   m_Layer: 0
   m_Name: Task Testing (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &712497838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712497837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61c9ae5303529d54c9756f51e6d3afb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_IsActive: 1
 --- !u!65 &712497839
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5537,6 +5526,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &712497843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712497837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f121f6e612e12cc40a7589be2d581c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskType: 1
+  taskKeyword: 
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &716015665
 Mesh:
   m_ObjectHideFlags: 0
@@ -14182,27 +14186,14 @@ GameObject:
   - component: {fileID: 1322532606}
   - component: {fileID: 1322532605}
   - component: {fileID: 1322532604}
-  - component: {fileID: 1322532603}
+  - component: {fileID: 1322532608}
   m_Layer: 0
   m_Name: Task Testing (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1322532603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322532602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61c9ae5303529d54c9756f51e6d3afb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_IsActive: 1
 --- !u!65 &1322532604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14292,6 +14283,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1322532608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322532602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f121f6e612e12cc40a7589be2d581c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskType: 0
+  taskKeyword: 
+  interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &1344270586
 Mesh:
   m_ObjectHideFlags: 0

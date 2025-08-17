@@ -10,8 +10,12 @@ public class QuestGiverAnimatronic : MonoBehaviour
     [SerializeField] private GameObject taskUIPrefab; // Prefab for the task UI
     [SerializeField] private TaskData[] possibleTasks; 
 
-    public CameraManager camManager; 
+    public CameraManager camManager;
 
+    private void Start()
+    {
+        taskManager.OnAnyTaskFailed += () => camManager.ForceExitAndLockCameras(); // Subscribe to task failure event to lock cameras
+    }
     public void GiveTask()
     {
         TaskData chosenTask = possibleTasks[Random.Range(0, possibleTasks.Length)];
