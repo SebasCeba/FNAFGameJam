@@ -8,6 +8,8 @@ public class TaskData
     public GameObject objectPrefab; // Prefab for the task item, e.g. trash, supplies, etc.
     public Transform[] spawnPoints; // Some tasks may require spawn points for items or objectives
 
+    public TaskType taskType;
+
     [Header("Task Settings")]
     public int numberToSpawn; // Used for "clean/send supplies" tasks, how many items to spawn
     public float timeLimit; // Time limit for the task in seconds
