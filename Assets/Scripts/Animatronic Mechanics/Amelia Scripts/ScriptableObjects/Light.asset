@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Light
   m_EditorClassIdentifier: 
   taskName: Keep Lights On
-  uiFormat: 
-  objectPrefab: {fileID: 0}
+  uiFormat: '"Waste your power! {}s"'
+  objectPrefab: {fileID: 4152888516528068010, guid: 7d565a3e5ff5c87428bfe62fab97e9bc, type: 3}
   spawnPoints: []
   taskType: 3
   numberToSpawn: 0
-  timeLimit: 0
+  timeLimit: 25
   requiresHold: 1

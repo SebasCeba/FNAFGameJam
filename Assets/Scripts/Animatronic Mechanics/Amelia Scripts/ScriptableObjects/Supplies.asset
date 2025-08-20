@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Supplies
   m_EditorClassIdentifier: 
   taskName: Send Supplies
-  uiFormat: 
-  objectPrefab: {fileID: 0}
+  uiFormat: '"Send Supplies {}!  Time: {}s'
+  objectPrefab: {fileID: 6496643659891367394, guid: 3dac32f7d8ce6094cb679990f0a4ad1e, type: 3}
   spawnPoints: []
   taskType: 1
-  numberToSpawn: 0
-  timeLimit: 0
+  numberToSpawn: 3
+  timeLimit: 30
   requiresHold: 0

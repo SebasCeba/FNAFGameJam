@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Trash
   m_EditorClassIdentifier: 
   taskName: Clean  the Office
-  uiFormat: 
-  objectPrefab: {fileID: 0}
+  uiFormat: '"Clean {} trash! Time {}s"'
+  objectPrefab: {fileID: 1171326131733075469, guid: 9c617ea510564254f820a87982dd0e3f, type: 3}
   spawnPoints: []
   taskType: 0
-  numberToSpawn: 0
-  timeLimit: 0
+  numberToSpawn: 4
+  timeLimit: 30
   requiresHold: 0
