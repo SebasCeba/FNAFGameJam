@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class TaskData
+[CreateAssetMenu(menuName = "Tasks/TaskData")]
+public class TaskData : ScriptableObject
 {
     [Header("General Info")]
     public string taskName; // "Clean this Office" , "Send Supplies", "Keep Door Open", "Keep Lights On"

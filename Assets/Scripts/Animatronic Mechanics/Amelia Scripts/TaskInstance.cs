@@ -12,7 +12,7 @@ public class TaskInstance
 
     public TaskType taskType;
     public List<GameObject> SpawnedObjects { get; private set; }
-    public int CompletedCount { get; private set; }
+    public int CompletedCount = 0;
     public int TotalObjects => SpawnedObjects.Count;
     //public float TimeRemaining => Data.timeLimit; // Assuming time limit is constant for the task
     public bool IsComplete => CompletedCount >= TotalObjects;

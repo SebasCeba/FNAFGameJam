@@ -8,19 +8,31 @@ public class QuestGiverAnimatronic : MonoBehaviour
     [SerializeField] private TaskManager taskManager; // Reference to the TaskManager to manage tasks
     [SerializeField] private TaskUIManager taskUIManager;
     [SerializeField] private GameObject taskUIPrefab; // Prefab for the task UI
-    [SerializeField] private TaskData[] possibleTasks; 
+    [SerializeField] public TaskData[] possibleTasks; 
 
     public CameraManager camManager;
 
     private void Start()
     {
         taskManager.OnAnyTaskFailed += () => camManager.ForceExitAndLockCameras(); // Subscribe to task failure event to lock cameras
+        GiveTask(); // Give a task when the script starts
     }
     public void GiveTask()
     {
-        TaskData chosenTask = possibleTasks[Random.Range(0, possibleTasks.Length)];
-        Debug.Log($"[QuestGiver] Giving task: {chosenTask.taskName}");
+        if (possibleTasks == null || possibleTasks.Length == 0)
+        {
+            Debug.LogError("[QuestGiver] No possible tasks assigned!");
+            return;
+        }
 
+        TaskData chosenTask = possibleTasks[Random.Range(0, possibleTasks.Length)];
+        if (chosenTask == null)
+        {
+            Debug.LogError("[QuestGiver] Chosen task is null!");
+            return;
+        }
+
+        Debug.Log($"[QuestGiver] Giving task: {chosenTask.taskName}");
         taskManager.CreateTask(chosenTask, this); 
     }
     public GameObject GetTaskUIPrefab()
@@ -37,16 +49,6 @@ public class QuestGiverAnimatronic : MonoBehaviour
         {
             taskManager.CreateTask(cleaningtask, this);
         }
-        //var task = new Task(
-        //    "Clean Trash", TaskType.CleanOffice,
-        //    onComplete: () => Debug.Log("Diner is cleaned up!"),
-        //    onFail: () =>
-        //    {
-        //        Debug.Log("Failed to clean the diner in time!");
-        //        camManager.ForceExitAndLockCameras(); 
-        //    }
-        //);
-        //taskManager.AddTask(task);
     }
     public void GiveSupplyTask()
     {
@@ -57,17 +59,6 @@ public class QuestGiverAnimatronic : MonoBehaviour
         {
             taskManager.CreateTask(supplyTask, this);
         }
-        //var task = new Task(
-        //    "Send Supplies",
-        //    TaskType.SendSupplies,
-        //    onComplete: () => Debug.Log("Supplies sent!"),
-        //    onFail: () =>
-        //    {
-        //        Debug.Log("Failed to send supplies in time!");
-        //        camManager.ForceExitAndLockCameras(); 
-        //    }
-        //);
-        //taskManager.AddTask(task);
     }
     public void GiveDoorTask()
     {
@@ -77,17 +68,6 @@ public class QuestGiverAnimatronic : MonoBehaviour
         {
             taskManager.CreateTask(doorTask, this);
         }
-        //var task = new Task(
-        //    "Keep Door Open",
-        //    TaskType.KeepDoorOpen,
-        //    onComplete: () => Debug.Log("Door is kept open!"),
-        //    onFail: () =>
-        //    {
-        //        Debug.Log("Failed to keep the door open in time!");
-        //        camManager.ForceExitAndLockCameras();
-        //    }
-        //);
-        //taskManager.AddTask(task);
     }
     public void GiveLightsTask()
     {
@@ -97,16 +77,5 @@ public class QuestGiverAnimatronic : MonoBehaviour
         {
             taskManager.CreateTask(lightsTask, this);
         }
-        //var task = new Task(
-        //    "Keep Lights On",
-        //    TaskType.KeepLightsOn,
-        //    onComplete: () => Debug.Log("Lights are kept on!"),
-        //    onFail: () =>
-        //    {
-        //        Debug.Log("Failed to keep the lights on in time!");
-        //        camManager.ForceExitAndLockCameras(); 
-        //    }
-        //);
-        //taskManager.AddTask(task);
     }
 }

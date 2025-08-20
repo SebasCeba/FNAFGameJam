@@ -36,4 +36,11 @@ public class TaskUIManager : MonoBehaviour
             return obj.GetComponent<TaskUIEntry>();
         }
     }
+    public void UpdateTaskUI(TaskInstance instance)
+    {
+        if (instance.UIEntry != null)
+        {
+            instance.UIEntry.UpdateProgress(instance.CompletedCount, instance.TotalObjects, instance.TimeRemaining);
+        }
+    }
 }

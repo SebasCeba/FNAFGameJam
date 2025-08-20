@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Represents a physical object in the scene that can be interacted with for a task. 
 public class TaskInteractable : MonoBehaviour
 {
     [Header("Task Properties")]
@@ -14,6 +15,8 @@ public class TaskInteractable : MonoBehaviour
     public bool IsCompleted { get; private set; } = false; // For TaskManager
     public TaskInstance LinkedInstance { get; private set; } // Linked task instance
     private TaskManager taskManager; // Reference to the TaskManager
+
+    // Setup and event registration
     private void OnEnable()
     {
         interactAction.action.performed += OnInteract; // Subscribe to the interact action
@@ -32,12 +35,16 @@ public class TaskInteractable : MonoBehaviour
        mainCam = Camera.main; // Get the main camera reference
         taskManager = FindFirstObjectByType<TaskManager>(); // Find the TaskManager in the scene
     }
+
+    // Link this object to a task instance
     public void Setup(TaskInstance instance)
     {
         LinkedInstance = instance; // Link the task instance
         IsCompleted = false; // Reset completion status
         gameObject.SetActive(true); // Ensure the task object is active
     }
+
+    // Player enters/exists the trigger collider
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -54,6 +61,8 @@ public class TaskInteractable : MonoBehaviour
             Debug.Log($"[TaskInteractable] Player exited trigger: {gameObject.name}");
         }
     }
+
+    // Handle interaction input
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (!isActiveTask || !playerNearby || !context.performed) return; // Check if the task is active and player is nearby
@@ -62,22 +71,17 @@ public class TaskInteractable : MonoBehaviour
         {
             if (hit.transform == transform) // Check if the ray hit this object
             {
-                Debug.Log($"[TaskInteractable] Interacted with: {gameObject.name}"); // Log the interaction
-
-                // Find matching task instance 
-                var task = taskManager.ActiveTasks.Find(t => 
-                t.Data != null && 
-                t.Data.taskType == taskType && 
-                t.Data.taskName.Contains(taskKeyword));
-
-                if(task != null)
+                if(hit.transform == transform)
                 {
-                    taskManager.CompleteTask(task); // Complete the task if found
-                    CompleteTask();
+                    Debug.Log($"[TaskInteractable] Interacted with task: {gameObject.name}");
+                    taskManager.ReportObjectCompleted(this); // Report the task completion to the TaskManager
+                    CompleteTask(); // Complete the task
                 }
             }
         }
     }
+
+    // Complete the task and perform necessary actions
     private void CompleteTask()
     {
         if(IsCompleted) return; // Check if the task is already completed

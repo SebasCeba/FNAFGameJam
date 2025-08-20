@@ -649,7 +649,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -736,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskType: 0
-  taskKeyword: 
+  taskKeyword: Trash
   interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &27273275
 Mesh:
@@ -4567,6 +4567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ba8c1569182da45b7d275c2066e575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTasks: 3
   taskUIManager: {fileID: 549858710}
 --- !u!114 &549858710
 MonoBehaviour:
@@ -5452,7 +5453,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5539,7 +5540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskType: 1
-  taskKeyword: 
+  taskKeyword: Supplies
   interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &716015665
 Mesh:
@@ -14209,7 +14210,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -14296,7 +14297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskType: 0
-  taskKeyword: 
+  taskKeyword: Trash
   interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &1344270586
 Mesh:
@@ -16835,6 +16836,7 @@ MonoBehaviour:
   taskManager: {fileID: 549858709}
   taskUIManager: {fileID: 549858710}
   taskUIPrefab: {fileID: 6111751825751473832, guid: a0c40bc3763fc92408bf48475558a105, type: 3}
+  possibleTasks: []
   camManager: {fileID: 131329837}
 --- !u!43 &1633211408
 Mesh:
