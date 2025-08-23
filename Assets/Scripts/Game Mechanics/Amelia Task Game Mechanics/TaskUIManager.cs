@@ -14,6 +14,7 @@ public class TaskUIManager : MonoBehaviour
         entry.gameObject.SetActive(true); // Activate the UI entry
 
         instance.UIEntry = entry; 
+        Debug.Log("Task UI Entry created for: " + instance.Data.taskName);
     }
     public void RemoveTaskUI(TaskInstance instance)
     {

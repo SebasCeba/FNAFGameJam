@@ -16449,11 +16449,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af18edc1ee7eff4eb50564e5a4460a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskInterval: 60
+  taskTimeLimit: 45
+  maxTasks: 3
   taskManager: {fileID: 549858709}
   taskUIManager: {fileID: 549858710}
   taskUIPrefab: {fileID: 6111751825751473832, guid: a0c40bc3763fc92408bf48475558a105, type: 3}
   possibleTasks: []
   camManager: {fileID: 131329837}
+  doorTimeOpen: 15
+  lightTimeOn: 15
 --- !u!43 &1633211408
 Mesh:
   m_ObjectHideFlags: 0
@@ -21186,6 +21191,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 993801990153691154, guid: fffb200ea5733474980af6aac17385e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1444920332395775456, guid: fffb200ea5733474980af6aac17385e7, type: 3}
       propertyPath: fpCamera
       value: 
@@ -21991,6 +22000,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door Button Test
       objectReference: {fileID: 0}
+    - target: {fileID: 8241439371362796300, guid: 7c255debabb4f6c449f9d586ba16c546, type: 3}
+      propertyPath: m_TagString
+      value: DoorButton
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22047,6 +22060,10 @@ PrefabInstance:
     - target: {fileID: 4152888516528068010, guid: 7d565a3e5ff5c87428bfe62fab97e9bc, type: 3}
       propertyPath: m_Name
       value: Light Button Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152888516528068010, guid: 7d565a3e5ff5c87428bfe62fab97e9bc, type: 3}
+      propertyPath: m_TagString
+      value: LightButton
       objectReference: {fileID: 0}
     - target: {fileID: 6429293439384401979, guid: 7d565a3e5ff5c87428bfe62fab97e9bc, type: 3}
       propertyPath: door

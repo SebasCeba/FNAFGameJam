@@ -31,6 +31,7 @@ public class TaskManager : MonoBehaviour
         TaskInstance instance = new TaskInstance(data, onComplete, onFail); // Create a new task instance with the data and empty list of spawned objects
         ActiveTasks.Add(instance);
         taskUIManager.AddTaskUI(instance, giver.GetTaskUIPrefab());
+        //Debug.Log("Task UI Entry created for: " + instance.Data.taskName);
     }
     public void ReportObjectCompleted(TaskInteractable task)
     {
