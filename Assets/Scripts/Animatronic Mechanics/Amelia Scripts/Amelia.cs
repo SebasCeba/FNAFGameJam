@@ -9,8 +9,22 @@ public class Amelia : MonoBehaviour
     public float meterValue = 100f; // Current value of the meter
     public float meterDecayRate = 5f; // Rate at which the meter decays per second
 
+    public float activationDelay = 30f; // Time in seconds before Amelia starts to decay
+    private bool isActive = false;
+    private float activationTimer = 0f; // Timer to track activation delay
+
+    public CameraManager cameraManager; // Reference to the CameraManager script
     private void Update()
     {
+        if (!isActive)
+        {
+            activationTimer += Time.deltaTime;
+            if (activationTimer >= activationDelay)
+                isActive = true; // Activate Amelia after the delay
+            else
+                return; // Do not proceed with decay if not active
+        }
+
         meterValue -= meterDecayRate * Time.deltaTime; // Decrease the meter value over time
         meterValue = Mathf.Clamp(meterValue, 0, meterMax); // Clamp the meter value between 0 and max
         UpdateMood();
@@ -22,6 +36,10 @@ public class Amelia : MonoBehaviour
             animator.Play("IdleWarning");
         else
             animator.Play("IdleDanger");
+        if(meterValue <= 0)
+        {
+            DisableAllCameras();
+        }
     }
     void UpdateMood()
     {
@@ -31,5 +49,12 @@ public class Amelia : MonoBehaviour
             meshRenderer.material = moodMaterials[1]; // Warning
         else
             meshRenderer.material = moodMaterials[2]; // Danger
+    }
+    void DisableAllCameras()
+    {
+        if (cameraManager)
+        {
+            cameraManager.ForceExitAndLockCameras(); // Force exit and lock cameras
+        }
     }
 }

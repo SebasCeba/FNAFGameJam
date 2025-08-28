@@ -11,7 +11,7 @@ namespace Artemis
         [Header("Components")]
         [SerializeField] FPController controller;
         [SerializeField] FPLookController lookController;
-        [SerializeField] CameraManager camManager; 
+        [SerializeField] public CameraManager camManager; 
 
         #region Input Handling
         void OnMove(InputValue value)
