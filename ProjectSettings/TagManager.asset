@@ -8,6 +8,7 @@ TagManager:
   - Supply
   - DoorButton
   - LightButton
+  - Office
   layers:
   - Default
   - TransparentFX

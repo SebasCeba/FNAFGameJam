@@ -1,26 +1,31 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.Search;
 
+public enum AnimatronicType { Shane, Alera, Scourage, Oscar, Amelia }
 public class JumpscareManager : MonoBehaviour
 {
     [Header("UI")]
-    public Image blackoutImage; // Fullscreen black image for fade effect
     public GameObject optionsPanel; // Panel with "Play Again" and "Menu" buttons
 
     [Header("Audio")]
     public AudioSource audioSource;
-    public AnimatronicVoice[] animaTronicVoices; // Assign in inspector 
 
-    public void TriggerJumpscare(string animatronicName)
+    [Header("Voice Lines")]
+    public AnimatronicVoice ShaneVoice;
+    public AnimatronicVoice AleraVoice;
+    public AnimatronicVoice ScourageVoice;
+    public AnimatronicVoice OscarVoice;
+    public AnimatronicVoice AmeliaVoice;
+
+    public void TriggerJumpscare(AnimatronicType type)
     {
-        // Blacken screen 
-        blackoutImage.color = new Color(0, 0, 0, 1);
+        if(GameManager.instance != null)
+            GameManager.instance.GameOver();
+
         optionsPanel.SetActive(false);
 
         // Play voice line 
-        var voice =System.Array.Find(animaTronicVoices, v => v.name == animatronicName);
+        AnimatronicVoice voice = GetVoiceByType(type);
         if(voice != null && voice.voiceLines.Length > 0)
         {
             AudioClip clip = GetWeightedVoiceLine(voice);
@@ -31,6 +36,24 @@ public class JumpscareManager : MonoBehaviour
         else
         {
             ShowOptions(); 
+        }
+    }
+    private AnimatronicVoice GetVoiceByType(AnimatronicType type)
+    {
+        switch (type)
+        {
+            case AnimatronicType.Shane:
+                return ShaneVoice;
+            case AnimatronicType.Alera:
+                return AleraVoice;
+            case AnimatronicType.Scourage:
+                return ScourageVoice;
+            case AnimatronicType.Oscar:
+                return OscarVoice;
+            case AnimatronicType.Amelia:
+                return AmeliaVoice;
+            default:
+                return null;
         }
     }
     AudioClip GetWeightedVoiceLine(AnimatronicVoice voice)
@@ -55,6 +78,8 @@ public class JumpscareManager : MonoBehaviour
     void ShowOptions()
     {
         optionsPanel.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     public void PlayAgain()
     {
@@ -68,7 +93,6 @@ public class JumpscareManager : MonoBehaviour
 [System.Serializable]
 public class AnimatronicVoice
 {
-    public string name;
     public AudioClip[] voiceLines;
     public float[] voiceLineWeights; // Weights for random selection, Higher = more common 
 }

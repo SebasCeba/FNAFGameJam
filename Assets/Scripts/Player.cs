@@ -16,10 +16,12 @@ namespace Artemis
         #region Input Handling
         void OnMove(InputValue value)
         {
+            if(GameManager.gameOver) return;
             controller.MoveInput = value.Get<Vector2>(); 
         }
         void OnLook(InputValue value)
         {
+            if (GameManager.gameOver) return;
             lookController.LookInput = value.Get<Vector2>();
         }
         void OnSprint(InputValue value)
@@ -28,6 +30,7 @@ namespace Artemis
         }
         void OnJump(InputValue value)
         {
+            if (GameManager.gameOver) return;
             if(value.isPressed)
             {
                 controller.TryJump(); 
@@ -35,7 +38,13 @@ namespace Artemis
         }
         void OnOpenCams(InputValue value)
         {
-            if(value.isPressed)
+            if (GameManager.gameOver)
+            {
+                Cursor.lockState = CursorLockMode.None; // Ensure cursor is free when game is over
+                Cursor.visible = true;
+                return;
+            }
+            if (value.isPressed)
             {
                 float currentPower = camManager.power.Power; 
                 if(currentPower <= 0f)

@@ -22,6 +22,7 @@ public class ShiftTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.gameOver || isWon) return; // Do not update the timer if the game is over or already won
         if (!isWon)
         {
             Timer += Time.deltaTime * TimeMultiplier; // Increment the timer by delta time multiplied by the speed multiplier
