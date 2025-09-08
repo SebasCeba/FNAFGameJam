@@ -28,6 +28,13 @@ public class Shane : MonoBehaviour
     private NavMeshAgent agent;
     public Door officeDoor; //   Reference to the door script
     public JumpscareManager jsManager; // Reference to the Jumpscare Manager
+
+    // Voice lines logic 
+    public AudioClip[] voiceLines;
+    public float[] voiceLineWeights; // Weights for each voice line, must match length of voiceLines array
+
+    private bool hasAttackedPlayer = false; // Prevent multiple triggers 
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -50,6 +57,32 @@ public class Shane : MonoBehaviour
                 return; // Not activated yet
             }
         }
+        // Check for attack on player target 
+        if(!hasAttackedPlayer && playerPoint != null)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, playerPoint.position);
+            if(distanceToPlayer < 1.0f) // Adjust range as needed 
+            {
+                agent.isStopped = true; // Stop moving
+                hasAttackedPlayer = true; // Prevent multiple triggers
+                Debug.Log("Shane reached player target! Trigger jumpscare."); 
+                if(jsManager != null)
+                {
+                    jsManager.TriggerJumpscare(AnimatronicType.Shane);
+                }
+
+                // Play voice line for testing 
+                var testClip = GetRandomVoiceLine();
+                if (testClip != null)
+                {
+                   AudioSource.PlayClipAtPoint(testClip, transform.position);
+                }
+                return;
+            }
+        }
+        // If Shane has attacked, do nothing else 
+        if (hasAttackedPlayer)
+            return;
         // Shane stands at the window for a set time 
         if (windowIdle)
         {
@@ -109,7 +142,7 @@ public class Shane : MonoBehaviour
                     }
                     if(jsManager != null)
                     {
-                        jsManager.TriggerJumpscare("Shane");
+                        jsManager.TriggerJumpscare(AnimatronicType.Shane);
                     }
                     GoToRandomPoint();
                     atEndAction = false;
@@ -178,5 +211,24 @@ public class Shane : MonoBehaviour
                 }
             }
         }
+    }
+    public AudioClip GetRandomVoiceLine()
+    {
+        float totalWeight = 0f;
+        foreach(var w in voiceLineWeights)
+        {
+            totalWeight += w;
+        }
+        float randomValue = Random.Range(0f, totalWeight);
+        float accum = 0f;
+        for (int i = 0; i < voiceLines.Length; i++)
+        {
+            accum += voiceLineWeights[i];
+            if (randomValue <= accum)
+            {
+                return voiceLines[i];
+            }
+        }
+        return voiceLines.Length > 0 ? voiceLines[0] : null; // Fallback
     }
 }

@@ -11,11 +11,11 @@ public class JumpscareManager : MonoBehaviour
     public AudioSource audioSource;
 
     [Header("Voice Lines")]
-    public AnimatronicVoice ShaneVoice;
-    public AnimatronicVoice AleraVoice;
-    public AnimatronicVoice ScourageVoice;
-    public AnimatronicVoice OscarVoice;
-    public AnimatronicVoice AmeliaVoice;
+    public Alera alera;
+    public Amelia amelia;
+    public Oscar oscar;
+    public Scourage scourage;
+    public Shane shane;
 
     public void TriggerJumpscare(AnimatronicType type)
     {
@@ -25,10 +25,9 @@ public class JumpscareManager : MonoBehaviour
         optionsPanel.SetActive(false);
 
         // Play voice line 
-        AnimatronicVoice voice = GetVoiceByType(type);
-        if(voice != null && voice.voiceLines.Length > 0)
+        AudioClip clip = GetVoiceByType(type);
+        if(clip != null)
         {
-            AudioClip clip = GetWeightedVoiceLine(voice);
             audioSource.clip = clip;
             audioSource.Play();
             Invoke(nameof(ShowOptions), clip.length); // Show options after clip ends
@@ -38,42 +37,17 @@ public class JumpscareManager : MonoBehaviour
             ShowOptions(); 
         }
     }
-    private AnimatronicVoice GetVoiceByType(AnimatronicType type)
+    private AudioClip GetVoiceByType(AnimatronicType type)
     {
         switch (type)
         {
-            case AnimatronicType.Shane:
-                return ShaneVoice;
-            case AnimatronicType.Alera:
-                return AleraVoice;
-            case AnimatronicType.Scourage:
-                return ScourageVoice;
-            case AnimatronicType.Oscar:
-                return OscarVoice;
-            case AnimatronicType.Amelia:
-                return AmeliaVoice;
-            default:
-                return null;
+            case AnimatronicType.Alera: return shane?.GetRandomVoiceLine();
+            case AnimatronicType.Amelia: return amelia?.GetRandomVoiceLine();
+            case AnimatronicType.Oscar: return oscar?.GetRandomVoiceLine();
+            case AnimatronicType.Scourage: return scourage?.GetRandomVoiceLine();
+            case AnimatronicType.Shane: return shane?.GetRandomVoiceLine();
+            default: return null;
         }
-    }
-    AudioClip GetWeightedVoiceLine(AnimatronicVoice voice)
-    {
-        float totalWeight = 0f;
-        foreach (var v in voice.voiceLineWeights)
-        {
-            totalWeight += v;
-        }
-        float randomValue = Random.Range(0, totalWeight);
-        float accum = 0f; 
-        for (int i = 0; i < voice.voiceLines.Length; i++)
-        {
-            accum += voice.voiceLineWeights[i];
-            if (randomValue <= accum)
-            {
-                return voice.voiceLines[i];
-            }
-        }
-        return voice.voiceLines[0]; // Fallback 
     }
     void ShowOptions()
     {
@@ -89,10 +63,4 @@ public class JumpscareManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
-}
-[System.Serializable]
-public class AnimatronicVoice
-{
-    public AudioClip[] voiceLines;
-    public float[] voiceLineWeights; // Weights for random selection, Higher = more common 
 }
