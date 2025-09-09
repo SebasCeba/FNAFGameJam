@@ -15,13 +15,18 @@ public class Shane : MonoBehaviour
     public float activationDelay = 3f; // Delay before shane starts moving 
 
     private int currentPoint = 0;
-    private bool observing = false;
-    private float observeTimer = 0f;
-    private bool activated = false;
+    
+    private float observeTimer = 0f;  
     private float activationTimer = 0f;
+    private float windowIdleTimer = 0f;
+    private float doorWaitTimer = 0f;
+    public float doorWaitTime = 3f; // Time to wait at the door if closed
+
+    private bool observing = false;
+    private bool activated = false;
     private bool atEndAction = false;
     private bool windowIdle = false;
-    private float windowIdleTimer = 0f;
+    private bool waitingAtDoor = false; 
 
     public FPController player;
     public FPLookController playerLook; 
@@ -70,19 +75,24 @@ public class Shane : MonoBehaviour
                 {
                     jsManager.TriggerJumpscare(AnimatronicType.Shane);
                 }
-
-                // Play voice line for testing 
-                var testClip = GetRandomVoiceLine();
-                if (testClip != null)
-                {
-                   AudioSource.PlayClipAtPoint(testClip, transform.position);
-                }
                 return;
             }
         }
         // If Shane has attacked, do nothing else 
         if (hasAttackedPlayer)
             return;
+        // Wait at door before attacking 
+        if (waitingAtDoor)
+        {
+            doorWaitTimer += Time.deltaTime;
+            if(doorWaitTimer >= doorWaitTime)
+            {
+                waitingAtDoor = false;
+                doorWaitTimer = 0f;
+                agent.SetDestination(playerPoint.position);
+                atEndAction = true; // Next action is to attack player
+            }
+        }
         // Shane stands at the window for a set time 
         if (windowIdle)
         {
@@ -128,18 +138,13 @@ public class Shane : MonoBehaviour
                     {
                         // Door is open, observe player 
                         observing = true;
-                        observeTimer = 0f;
+                        doorWaitTime = 0f;
                         atEndAction = false;
                         return;
                     }
                 }
                 else if(agent.destination == playerPoint.position)
                 {
-                    // Attack the player
-                    if (playerLook != null)
-                    {
-                        playerLook.canLook = false; // Disable looking
-                    }
                     if(jsManager != null)
                     {
                         jsManager.TriggerJumpscare(AnimatronicType.Shane);
