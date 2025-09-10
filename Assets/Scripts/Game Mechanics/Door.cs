@@ -13,7 +13,8 @@ public class Door : MonoBehaviour
     public bool IsOn; 
     private Vector3 targetPos;
 
-    [SerializeField] private PowerSystem power; 
+    [SerializeField] private PowerSystem power;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,7 +42,6 @@ public class Door : MonoBehaviour
                 power.SystemsOn -= 1; // Decrement the power system count
             }
         }
-        
 
         float desiredY = IsOpen ? OpenY : ClosedY; // Determine the desired Y position based on the door state
         if (Mathf.Abs(transform.localPosition.y - desiredY) > 0.01f) // Check if the door needs to move

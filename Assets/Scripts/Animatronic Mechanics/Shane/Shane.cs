@@ -4,40 +4,40 @@ using UnityEngine.AI;
 
 public class Shane : MonoBehaviour
 {
+    [Header("Waypoints & Targets")]
     public Transform[] wanderPoints;
     public Transform windowPoint;
-    public Transform doorPoint;
     public Transform playerPoint;
+
+    [Header("Movement")]
     public float moveSpeed = 3f;
-    public float observeTime = 5f;
-    public float windowIdleTime = 8f; // Time spent idling at the window
 
+    [Header("Behavior Timers")]
     public float activationDelay = 3f; // Delay before shane starts moving 
+    public float windowIdleTime = 8f; // Time spent idling at the window
+    public float observeTime = 5f;
 
-    private int currentPoint = 0;
-    
-    private float observeTimer = 0f;  
-    private float activationTimer = 0f;
-    private float windowIdleTimer = 0f;
-    private float doorWaitTimer = 0f;
-    public float doorWaitTime = 3f; // Time to wait at the door if closed
-
-    private bool observing = false;
-    private bool activated = false;
-    private bool atEndAction = false;
-    private bool windowIdle = false;
-    private bool waitingAtDoor = false; 
-
+    [Header("References")]
     public FPController player;
-    public FPLookController playerLook; 
-    private NavMeshAgent agent;
+    public FPLookController playerLook;
     public Door officeDoor; //   Reference to the door script
     public JumpscareManager jsManager; // Reference to the Jumpscare Manager
 
+    [Header("Voice Lines")]
     // Voice lines logic 
     public AudioClip[] voiceLines;
     public float[] voiceLineWeights; // Weights for each voice line, must match length of voiceLines array
 
+    // Internal state
+    private NavMeshAgent agent;
+    private int currentPoint = 0;
+    private float observeTimer = 0f;  
+    private float activationTimer = 0f;
+    private float windowIdleTimer = 0f;
+    private bool observing = false;
+    private bool activated = false;
+    private bool atEndAction = false;
+    private bool windowIdle = false;
     private bool hasAttackedPlayer = false; // Prevent multiple triggers 
 
     private void Awake()
@@ -52,7 +52,7 @@ public class Shane : MonoBehaviour
         if(!activated)
         {
             activationTimer += Time.deltaTime;
-            if (activationTimer >= activationDelay)
+            if(activationTimer >= activationDelay)
             {
                 activated = true;
                 GoToRandomPoint();
@@ -66,8 +66,16 @@ public class Shane : MonoBehaviour
         if(!hasAttackedPlayer && playerPoint != null)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, playerPoint.position);
-            if(distanceToPlayer < 1.0f) // Adjust range as needed 
+            if(distanceToPlayer < 1.0f && atEndAction) // Adjust range as needed 
             {
+                // Check door state before attacking 
+                if (officeDoor != null && !officeDoor.IsOpen)
+                {
+                    // Door is closed, cannot attack and resume patrol 
+                    GoToRandomPoint();
+                    atEndAction = false;
+                    return;
+                }
                 agent.isStopped = true; // Stop moving
                 hasAttackedPlayer = true; // Prevent multiple triggers
                 Debug.Log("Shane reached player target! Trigger jumpscare."); 
@@ -79,22 +87,10 @@ public class Shane : MonoBehaviour
             }
         }
         // If Shane has attacked, do nothing else 
-        if (hasAttackedPlayer)
+        if(hasAttackedPlayer)
             return;
-        // Wait at door before attacking 
-        if (waitingAtDoor)
-        {
-            doorWaitTimer += Time.deltaTime;
-            if(doorWaitTimer >= doorWaitTime)
-            {
-                waitingAtDoor = false;
-                doorWaitTimer = 0f;
-                agent.SetDestination(playerPoint.position);
-                atEndAction = true; // Next action is to attack player
-            }
-        }
         // Shane stands at the window for a set time 
-        if (windowIdle)
+        if(windowIdle)
         {
             windowIdleTimer += Time.deltaTime;
             transform.LookAt(windowPoint);
@@ -102,12 +98,20 @@ public class Shane : MonoBehaviour
             {
                 windowIdle = false;
                 windowIdleTimer = 0f;
-                // After window idle, randomly choose next target 
-                ChooseDynamicAction();
+                // After window idle, randomly choose to attack player or patrol 
+                if(Random.value < 0.5f)
+                {
+                    agent.SetDestination(playerPoint.position);
+                    atEndAction = true; // After reaching player, resume patrol
+                }
+                else
+                {
+                    GoToRandomPoint();
+                }
             }
             return;
         }
-        if (observing)
+        if(observing)
         {
             observeTimer += Time.deltaTime; 
             transform.LookAt(playerPoint);
@@ -115,49 +119,6 @@ public class Shane : MonoBehaviour
             {
                 observing = false;
                 GoToRandomPoint();
-            }
-            return; 
-        }
-        // Shane is at the end of his path and is performing an action
-        if (atEndAction)
-        {
-            // Shane is preforming his end action
-            if(!agent.pathPending && agent.remainingDistance < 0.5f)
-            {
-                // If at the door, check door state 
-                if(agent.destination == doorPoint.position && officeDoor != null)
-                {
-                    if (!officeDoor.IsOpen)
-                    {
-                        // Door is closed, return to start 
-                        GoToRandomPoint();
-                        atEndAction = false;
-                        return;
-                    }
-                    else
-                    {
-                        // Door is open, observe player 
-                        observing = true;
-                        doorWaitTime = 0f;
-                        atEndAction = false;
-                        return;
-                    }
-                }
-                else if(agent.destination == playerPoint.position)
-                {
-                    if(jsManager != null)
-                    {
-                        jsManager.TriggerJumpscare(AnimatronicType.Shane);
-                    }
-                    GoToRandomPoint();
-                    atEndAction = false;
-                }
-                else
-                {
-                    // Finished end action, resume patrol 
-                    GoToRandomPoint();
-                    atEndAction = false;
-                }
             }
             return; 
         }
@@ -190,31 +151,10 @@ public class Shane : MonoBehaviour
                 windowIdleTime = 0f;
                 atEndAction = false; // windowIdle will handle next step 
                 break;
-            case 2: // Go to door 
-                agent.SetDestination(doorPoint.position);
-                atEndAction = true; 
-                break;
-            case 3: // Attack player
+            case 2: // Attack player
                 agent.SetDestination(playerPoint.position);
                 atEndAction = true;
                 break;
-        }
-    }
-    // Collider trigger for game over 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log($"Shane OnTriggerEnter: hit {other.name} with tag {other.tag}");
-        if (other.CompareTag("Office"))
-        {
-            Debug.Log("Office door is closed. Triggering jumpscare and showing options panel.");
-            if (officeDoor != null && !officeDoor.IsOpen)
-            {
-                //Door is closed, game over 
-                if(jsManager != null)
-                {
-                    jsManager.TriggerJumpscare(AnimatronicType.Shane);
-                }
-            }
         }
     }
     public AudioClip GetRandomVoiceLine()

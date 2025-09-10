@@ -23,6 +23,7 @@ public class JumpscareManager : MonoBehaviour
             GameManager.instance.GameOver();
 
         optionsPanel.SetActive(false);
+        ShowOptions();
 
         // Play voice line 
         AudioClip clip = GetVoiceByType(type);
@@ -30,18 +31,18 @@ public class JumpscareManager : MonoBehaviour
         {
             audioSource.clip = clip;
             audioSource.Play();
-            Invoke(nameof(ShowOptions), clip.length); // Show options after clip ends
+            //Invoke(nameof(ShowOptions), clip.length); // Show options after clip ends
         }
         else
         {
-            ShowOptions(); 
+            ShowOptions();
         }
     }
     private AudioClip GetVoiceByType(AnimatronicType type)
     {
         switch (type)
         {
-            case AnimatronicType.Alera: return shane?.GetRandomVoiceLine();
+            case AnimatronicType.Alera: return alera?.GetRandomVoiceLine();
             case AnimatronicType.Amelia: return amelia?.GetRandomVoiceLine();
             case AnimatronicType.Oscar: return oscar?.GetRandomVoiceLine();
             case AnimatronicType.Scourage: return scourage?.GetRandomVoiceLine();

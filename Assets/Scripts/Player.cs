@@ -36,7 +36,7 @@ namespace Artemis
                 controller.TryJump(); 
             }
         }
-        void OnOpenCams(InputValue value)
+        public void OnOpenCams(InputValue value)
         {
             if (GameManager.gameOver)
             {
