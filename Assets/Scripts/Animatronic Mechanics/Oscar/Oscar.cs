@@ -2,19 +2,27 @@ using UnityEngine;
 
 public class Oscar : MonoBehaviour
 {
+    [Header("Hide Spots and Area Management")]
     public Transform[] hideSpots;
+    public AreaManager currentArea; // The area oscar is currently hiding in
+    public AreaManager[] areaManagers; // All area managers in the scene
+
+    [Header("Activation Settings & Timing")]
     public float activationDelay = 30f; // Time in seconds before Oscar starts teleporting
     private bool isActive = false;
     private float activationTimer = 0f; // Timer to track activation delay
-
-    public float powerDrain = 10f;
+  
     public float timeToFind = 20f; // Time in seconds to find Oscar
     private float timer = 0f;
     private bool hidden = false;
 
+    [Header("Power System Settings & Penalties")]
     public PowerSystem powerSystem;
-    public AreaManager currentArea; // Not implemented yet
+    public float powerDrain = 10f;
     public float teleportInterval = 30f;
+    public float timePenalty = 5f;
+    public float extraPowerDrain = 5f;
+
 
     // Voice lines logic
     public AudioClip[] voiceLines;
@@ -51,24 +59,15 @@ public class Oscar : MonoBehaviour
                 Recover();
             }
         }
-        //timer += Time.deltaTime;
-        //if (timer >= teleportInterval)
-        //{
-        //    TeleportToRandomSpot();
-        //    timer = 0f;
-        //}
     }
     void TeleportToRandomSpot()
     {
         int idx = Random.Range(0, hideSpots.Length);
         transform.position = hideSpots[idx].position;
+        currentArea = areaManagers[idx]; //Set the current area
+        SetLookDirection(currentArea.lookEulerAngles); // Face the correct direction
         hidden = true;
         timer = 0f; 
-
-        // Face a direction 
-        //Vector3 lookDir = (Vector3.zero - transform.position).normalized;
-        //if(lookDir != Vector3.zero)
-        //    transform.rotation = Quaternion.LookRotation(lookDir);
     }
     public void TryShock(AreaManager area)
     {
@@ -79,6 +78,16 @@ public class Oscar : MonoBehaviour
         else
         {
             // Might just lower amount of time needed to find oscar or increase the power the player loses
+            timer += timePenalty;
+            if (timer > timeToFind)
+            {
+                timer = timeToFind; // Cap the timer to not exceed timeToFind
+            }
+            // Drain additional power (same as powerDrain) 
+            if(powerSystem != null)
+            {
+                powerSystem.Power -= extraPowerDrain;
+            }
         }
     }
     public void Recover()
@@ -87,16 +96,9 @@ public class Oscar : MonoBehaviour
         timer = 0f;
         TeleportToRandomSpot();
     }
-    public void SetLookDirection(bool left)
+    public void SetLookDirection(Vector3 eulerAngles)
     {
-        if (left)
-        {
-            transform.rotation = Quaternion.Euler(0f, -90f, 0f); // Look left
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0f, 90f, 0f); // Look right
-        }
+        transform.rotation = Quaternion.Euler(eulerAngles);
     }
     public AudioClip GetRandomVoiceLine()
     {

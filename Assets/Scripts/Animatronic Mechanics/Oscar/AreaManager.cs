@@ -4,14 +4,16 @@ public class AreaManager : MonoBehaviour
 {
     public Oscar oscar;
     public Collider areaCollider;
-    public bool lookLeft = true; // Set in the inspector for each area 
+
+    [Tooltip("If true, Oscar will look towards the player when entering this area.")]
+    public Vector3 lookEulerAngles = Vector3.zero; // Set in inspector for each area 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Oscar"))
         {
             oscar.currentArea = this; 
-            oscar.SetLookDirection(lookLeft);
+            oscar.SetLookDirection(lookEulerAngles);
         }
     }
     public void OnShockButttonPress()

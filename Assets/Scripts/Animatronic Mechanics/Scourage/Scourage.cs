@@ -5,30 +5,39 @@ using UnityEngine.AI;
 
 public class Scourage : MonoBehaviour
 {
+    [Header("Transforms & Movement")]
     public Transform playerTransform; // Reference to the player's transform
     public Transform doorTransform; // Reference to the door's transform
     public Transform originTransform; // Where they came from 
     public float moveSpeed = 5f; // Speed at which Scourage moves
+
+    [Header("State Management")]
     public bool charging = false; // Whether Scourage is currently charging
     public bool returning = false; // Whether Scourage is returning to origin
     public bool hasAttackedPlayer = false; // Prevent multiple triggers
-
     private bool activated = false;
+    private bool waitingForNextCharge = false; //  Whether waiting for next charge
+
+    [Header("Activation Settings")]
     private float activationTimer = 0f;
     public float activationDelay = 3f; // Delay before shane starts moving 
 
+    [Header("References")]
     private NavMeshAgent agent;
     public PowerSystem powerSystem; // Reference to the power system
     public CameraManager cameraManager; // Reference to the camera manager
+    public JumpscareManager jsManager; // Reference to the Jumpscare Manager
+
+    [Header("Power Drain Settings")]
     [SerializeField] public float powerTaken; // Power drained when door is closed
 
-    public JumpscareManager jsManager; // Reference to the Jumpscare Manager
+    [Header("Charge Settings")]
     public float chargeTimeOut = 5f; // Time before giving up charge
     private float chargeTimer = 0f; // Timer for charge timeout
     private float waitTimer = 0f; // Timer for waiting between charges
-    public float nextChargeDelay = 20f; // Fixed delay before next charge  
-    private bool waitingForNextCharge = false; //  Whether waiting for next charge
+    public float nextChargeDelay = 20f; // Fixed delay before next charge    
     public float cameraInfluenceFactor = 0.5f; // Factor to reduce wait time if cameras are open
+
 
     // Voice lines logic 
     public AudioClip[] voiceLines;
@@ -98,7 +107,6 @@ public class Scourage : MonoBehaviour
             returning = false;
             waitingForNextCharge = true;
             waitTimer = 0f;
-            //agent.SetDestination(originTransform.position);
 
             // Face the player 
             if (playerTransform != null)
@@ -110,13 +118,6 @@ public class Scourage : MonoBehaviour
                     transform.rotation = Quaternion.LookRotation(lookDirection);
                 }
             }
-            //if (Vector3.Distance(transform.position, originTransform.position) < 0.5f)
-            //{
-            //    returning = false;
-            //    waitingForNextCharge = true;
-            //    waitTimer = 0f; // Reset activation timer for next charge
-
-            //}
         }
         else if (waitingForNextCharge)
         {
