@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oscar: {fileID: 1988987404}
   areaCollider: {fileID: 8813678}
+  isCrouchArea: 0
   lookEulerAngles: {x: 0, y: 75, z: 0}
 --- !u!1 &9085819
 GameObject:
@@ -399,6 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oscar: {fileID: 1988987404}
   areaCollider: {fileID: 9085821}
+  isCrouchArea: 0
   lookEulerAngles: {x: 0, y: 45, z: 0}
 --- !u!43 &11439721
 Mesh:
@@ -5351,7 +5353,7 @@ MonoBehaviour:
   audioSource: {fileID: 549858711}
   alera: {fileID: 0}
   amelia: {fileID: 0}
-  oscar: {fileID: 0}
+  oscar: {fileID: 1988987404}
   scourage: {fileID: 1988987403}
   shane: {fileID: 1988987401}
 --- !u!1 &617712302
@@ -15718,6 +15720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oscar: {fileID: 1988987404}
   areaCollider: {fileID: 1269179089}
+  isCrouchArea: 0
   lookEulerAngles: {x: 0, y: 60, z: 0}
 --- !u!43 &1269183753
 Mesh:
@@ -16287,6 +16290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oscar: {fileID: 1988987404}
   areaCollider: {fileID: 1339601418}
+  isCrouchArea: 0
   lookEulerAngles: {x: 0, y: 15, z: 0}
 --- !u!43 &1344270586
 Mesh:
@@ -16756,6 +16760,76 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7457335257852130131, guid: e6cd8e21882e72c43a2168439f72724b, type: 3}
   m_PrefabInstance: {fileID: 5948624654832677515}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1386415357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1386415360}
+  - component: {fileID: 1386415359}
+  - component: {fileID: 1386415358}
+  m_Layer: 0
+  m_Name: Final Spot Oscar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1386415358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386415357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99ee34d5cad9ab468b483e375e7ca9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oscar: {fileID: 1988987404}
+  areaCollider: {fileID: 1386415359}
+  isCrouchArea: 1
+  lookEulerAngles: {x: 0, y: 0, z: 0}
+--- !u!65 &1386415359
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386415357}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.809436, y: 4.9981184, z: 8.446014}
+  m_Center: {x: -0.085256934, y: 1.9990592, z: 1.5483246}
+--- !u!4 &1386415360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386415357}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.5700006, y: 13.994, z: -321.34}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1387654229
 GameObject:
   m_ObjectHideFlags: 0
@@ -23818,13 +23892,19 @@ MonoBehaviour:
   - {fileID: 9085822}
   - {fileID: 1269179090}
   - {fileID: 8813679}
+  - {fileID: 1386415358}
   activationDelay: 30
+  maxAttempts: 3
   timeToFind: 20
   powerSystem: {fileID: 549858708}
   powerDrain: 10
   teleportInterval: 30
   timePenalty: 5
   extraPowerDrain: 5
+  ventDrainrate: 1.5
+  ventAttackDelay: 10
+  ventPoint: {fileID: 1386415360}
+  jumpscareManager: {fileID: 549858712}
   voiceLines:
   - {fileID: 8300000, guid: 962a7d6fae2f8d446bff79bc176f4916, type: 3}
   voiceLineWeights:
@@ -24348,6 +24428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oscar: {fileID: 1988987404}
   areaCollider: {fileID: 2081346811}
+  isCrouchArea: 0
   lookEulerAngles: {x: 0, y: 30, z: 0}
 --- !u!43 &2085497186
 Mesh:
@@ -29197,3 +29278,4 @@ SceneRoots:
   - {fileID: 1199320287}
   - {fileID: 5948624654832677515}
   - {fileID: 1496364694}
+  - {fileID: 1386415360}
