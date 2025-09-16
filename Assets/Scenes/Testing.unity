@@ -5351,7 +5351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionsPanel: {fileID: 216966927}
   audioSource: {fileID: 549858711}
-  alera: {fileID: 0}
+  alera: {fileID: 1988987405}
   amelia: {fileID: 0}
   oscar: {fileID: 1988987404}
   scourage: {fileID: 1988987403}
@@ -23874,7 +23874,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988987399}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d681ad852514e564fa2cd4607c405b24, type: 3}
   m_Name: 
@@ -23905,6 +23905,30 @@ MonoBehaviour:
   ventAttackDelay: 10
   ventPoint: {fileID: 1386415360}
   jumpscareManager: {fileID: 549858712}
+  voiceLines:
+  - {fileID: 8300000, guid: 962a7d6fae2f8d446bff79bc176f4916, type: 3}
+  voiceLineWeights:
+  - 100
+--- !u!114 &1988987405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988987399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d122cdea9b5be9c46bb5aabeabf46b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2006501330}
+  jsManager: {fileID: 549858712}
+  aleraRoomPosition: {fileID: 57046809}
+  officePosition: {fileID: 1199320287}
+  activationDelay: 5
+  cameraOpenThreshold: 4
+  inOffice: 0
+  officeStayDuration: 15
   voiceLines:
   - {fileID: 8300000, guid: 962a7d6fae2f8d446bff79bc176f4916, type: 3}
   voiceLineWeights:
@@ -24030,6 +24054,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fffb200ea5733474980af6aac17385e7, type: 3}
+--- !u!114 &2006501330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5318312088201578840, guid: fffb200ea5733474980af6aac17385e7, type: 3}
+  m_PrefabInstance: {fileID: 2006501329}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b67384752af0449a1c6bb5bb7231da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &2051621641
 Mesh:
   m_ObjectHideFlags: 0
@@ -29267,6 +29302,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7276692761047668813, guid: e6cd8e21882e72c43a2168439f72724b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1988987404}
+    - targetCorrespondingSourceObject: {fileID: 7276692761047668813, guid: e6cd8e21882e72c43a2168439f72724b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1988987405}
   m_SourcePrefab: {fileID: 100100000, guid: e6cd8e21882e72c43a2168439f72724b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

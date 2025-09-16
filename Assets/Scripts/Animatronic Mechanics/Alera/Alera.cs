@@ -4,14 +4,22 @@ using UnityEngine;
 public class Alera : MonoBehaviour
 {
     public Player player;
+    public JumpscareManager jsManager; // Reference to jumpscare manager
+    public Transform aleraRoomPosition; // Position in the room where alera appears
+    public Transform officePosition; // Position in the office where alera appears
 
     public float activationDelay = 30f;
     private bool isActive = false; 
     private float activationTimer = 0f;
 
-    public float cameraTimeSpent = 0f;
-    public float cameraTimeThreshold = 60f;
+    private int cameraOpenCount = 0;
+    public int cameraOpenThreshold; // Number of times cameras must be opened to trigger Alera
+    private bool lastCameraStateInOffice = false; // Track last camera state in office
+    private bool lastCameraState = false; // Track last camera state
     public bool inOffice = false;
+
+    public float officeStayDuration = 5f; // Time Alera stays in the office before attacking
+    private float officeTimer = 0f;
 
     // Voice lines logic
     public AudioClip[] voiceLines;
@@ -19,7 +27,7 @@ public class Alera : MonoBehaviour
 
     private void Update()
     {
-        if (!isActive)
+        if(!isActive)
         {
             activationTimer += Time.deltaTime;
             if(activationTimer >= activationDelay)
@@ -29,20 +37,90 @@ public class Alera : MonoBehaviour
             else
                 return; // Skip the rest of the update until Alera is active
         }
-        if(player != null && player.camManager != null && player.camManager.CamerasOpen)
+
+        // Detect camera open event (transition from closed to open 
+        bool camerasOpen = player != null && player.camManager != null && player.camManager.CamerasOpen;
+        if(camerasOpen && !lastCameraState && !inOffice)
         {
-            cameraTimeSpent += Time.deltaTime; 
+            cameraOpenCount++;
+
+            // Trigger events at certain thresholds 
+            if(cameraOpenCount == 1)
+            {
+                // Trigger firest event (poster change)
+                
+            }
+            else if(cameraOpenCount == 4)
+            {
+                // Trigger second event (Lights flicker)
+
+                AppearInOffice();
+            }
+            // Add more thresholds/events as needed 
+
+            //When threshold reached, alera appears in the office
+            //if (cameraOpenCount >= cameraOpenThreshold)
+            //{
+            //    AppearInOffice();
+            //}
         }
-        if(!inOffice && cameraTimeSpent > cameraTimeThreshold)
+        lastCameraState = camerasOpen;
+
+        // Handle Alera's behavior in the office
+        if(inOffice)
         {
-            AppearInOffice();
+            officeTimer += Time.deltaTime;
+
+            // Shoo alera away if cameras are opened again
+            if(camerasOpen && !lastCameraStateInOffice)
+            {
+                ResetAlera();
+                return; // Exit early to avoid triggering jumpscare
+            }
+            lastCameraStateInOffice = camerasOpen;
+
+            // If jumpscare if timer runs out 
+            if (officeTimer >= officeStayDuration)
+            {
+                if(jsManager != null)
+                {
+                    jsManager.TriggerJumpscare(AnimatronicType.Alera);
+                }
+                else
+                {
+                    Debug.LogWarning("JumpscareManager reference not set on Alera.");
+                }
+                ResetAlera();
+            }
+        }
+        else
+        {
+            lastCameraStateInOffice = false; // Reset when not in office
         }
     }
     void AppearInOffice()
     {
         inOffice = true;
-        // Move to office position, play jumpscare 
-        //player.Defeat(); 
+        officeTimer = 0f; // Reset timer
+        lastCameraStateInOffice = player != null && player.camManager != null && player.camManager.CamerasOpen;
+        // Teleport Alera to the office position
+        if (officePosition != null)
+        {
+            transform.position = officePosition.position;
+        }
+    }
+    void ResetAlera()
+    {
+        inOffice = false;
+        officeTimer = 0f;
+        cameraOpenCount = 0;
+        lastCameraState = false;
+        lastCameraStateInOffice = false;
+        // Teleport Alera back to her room if needed
+        if (aleraRoomPosition != null)
+        {
+            transform.position = aleraRoomPosition.position;
+        }
     }
     public AudioClip GetRandomVoiceLine()
     {
