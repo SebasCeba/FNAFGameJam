@@ -1,10 +1,13 @@
+using Unity.UI.Shaders.Sample;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Amelia : MonoBehaviour
 {
     public Material[] moodMaterials; // If any case the modeler doesn't include the materials/variants for happy, warning and danger moods.
-    public SkinnedMeshRenderer meshRenderer; // Reference to the SkinnedMeshRenderer component
+    public MeshRenderer meshRenderer; // Reference to the SkinnedMeshRenderer component
     public Animator animator; // Reference to the Animator component
+    public Meter meterSlider; // Reference to the UI Slider for the meter
     public float meterMax = 100f; // Maximum value of the meter
     public float meterValue = 100f; // Current value of the meter
     public float meterDecayRate = 5f; // Rate at which the meter decays per second
@@ -35,22 +38,28 @@ public class Amelia : MonoBehaviour
         UpdateMood();
 
         // Once they gave the modeler the materials, variants and animations, we can implement the mood changes based on meterValue.
-        if (meterValue > meterMax * 0.5f)
-            animator.Play("IdleHappy");
-        else if(meterValue > meterMax * 0.2f)
-            animator.Play("IdleWarning");
-        else
-            animator.Play("IdleDanger");
+        //if (meterValue > meterMax * 0.5f)
+        //    animator.Play("IdleHappy");
+        //else if(meterValue > meterMax * 0.2f)
+        //    animator.Play("IdleWarning");
+        //else
+        //    animator.Play("IdleDanger");
         if(meterValue <= 0)
         {
             DisableAllCameras();
         }
+
+        // Update the UI slider
+        if(meterSlider != null)
+        {
+            meterSlider.Value = meterValue / meterMax;
+        }
     }
-    void UpdateMood()
+    public void UpdateMood()
     {
-        if(meterValue > meterMax * 0.5f)
+        if(meterValue > meterMax * 0.75f)
             meshRenderer.material = moodMaterials[0]; // Happy
-        else if (meterValue > meterMax * 0.2f)
+        else if (meterValue > meterMax * 0.25f)
             meshRenderer.material = moodMaterials[1]; // Warning
         else
             meshRenderer.material = moodMaterials[2]; // Danger
