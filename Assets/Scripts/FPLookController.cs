@@ -16,7 +16,8 @@ public class FPLookController : MonoBehaviour
     private float currentYaw = 0f;
     private float startingYaw;
 
-    public bool canLook = true; 
+    public bool canLook = true;
+    public bool lockCam = false; 
     public float CurrentPitch
     {
         get => currentPitch;
@@ -43,9 +44,21 @@ public class FPLookController : MonoBehaviour
     #region Look methods 
     void LookUpdate()
     {
-        if(!canLook) return; 
+        if(!canLook) return;
+        if (lockCam)
+        {
+            // Lock cursor to center of screen and hide it
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = true;
+        }
+        else
+        {
+            // Unlock cursor and make it visible
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
 
-        Vector2 input = new Vector2(LookInput.x * LookSensitivity.x, LookInput.y * LookSensitivity.y);
+            Vector2 input = new Vector2(LookInput.x * LookSensitivity.x, LookInput.y * LookSensitivity.y);
 
         // Vertical Look (pitch)
         CurrentPitch -= input.y;
